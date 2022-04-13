@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { loginUser } from '../../api/fetch-login'
 export function LoginForm() {
   const [loginFormInfo, setLoginFormInfo] = useState({
     username: '',
     password: '',
   })
-
+  const navigate = useNavigate()
   function changeUsername(e) {
     setLoginFormInfo({
       username: e.target.value,
@@ -25,20 +27,16 @@ export function LoginForm() {
     } else {
       const dataKey = result.data
       localStorage.setItem('token', dataKey.token)
-      window.location.href = '/html/home.html'
+      navigate('/')
     }
   }
 
-  async function onLoginClick() {
-    const username = document.getElementById('username').value
-    const password = document.getElementById('password').value
-
-    const result = await loginUser({ username, password })
+  async function handleLoginClick() {
+    const result = await loginUser(loginFormInfo)
 
     handleLoginResult(result)
   }
 
-  function handleLoginButtonClick(result) {}
   console.log(loginFormInfo)
   return (
     <form id="loginForm">
@@ -73,6 +71,7 @@ export function LoginForm() {
           id="login"
           type="button"
           className="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+          onClick={handleLoginClick}
         >
           Login
         </button>

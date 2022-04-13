@@ -1,6 +1,7 @@
 import { API_URL } from './config'
 
 export async function loginUser(data) {
+  console.log(data)
   const rawResponse = await fetch(`${API_URL}user/login`, {
     method: 'POST',
     headers: {
