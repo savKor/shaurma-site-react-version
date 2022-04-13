@@ -118,6 +118,10 @@ footer {
   height: 160px;
 }
 
+#loginContainer{
+  width: 700px;
+}
+
 #image-shaurma-in-order {
   max-height: 160px;
 }

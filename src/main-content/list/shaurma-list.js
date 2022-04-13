@@ -11,7 +11,11 @@ export function ListOfCards(props) {
     const statusShaurmaInCart = shaurmaList[i].inCart
 
     const cardsOfShaurma = (
-      <div className="shaurma-cards" id={idOfCardShaurma}>
+      <div
+        className="shaurma-cards"
+        id={idOfCardShaurma}
+        key={shaurmaList[i]._id}
+      >
         <img
           id="image-shaurma"
           src="../images/Depositphotos_73527551_l-2015-pic905-895x505-54479.jpg"

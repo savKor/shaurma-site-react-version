@@ -1,11 +1,13 @@
+import { Link } from 'react-router-dom'
+
 export function SignUpButton() {
   return (
-    <a
+    <Link
       id="register"
       className="btn btn-sm btn-outline-secondary"
-      href="./registration.html"
+      to="/registration"
     >
       Регистрация
-    </a>
+    </Link>
   )
 }

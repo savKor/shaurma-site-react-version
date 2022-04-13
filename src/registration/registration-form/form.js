@@ -1,39 +1,72 @@
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { registerUser } from '../../api/fetch-registration'
+
 export function RegistrarionForm() {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const navigate = useNavigate()
+
+  console.log(username, password)
+
+  async function handleRegistrationResult(result) {
+    if (result.success === false) {
+      alert(result.errors[0].message)
+    } else {
+      navigate('/login')
+    }
+  }
+
+  const handleRegistrationClick = async () => {
+    const result = await registerUser({ username, password })
+    handleRegistrationResult(result)
+  }
+
   return (
     <form id="registerForm">
-      <div class="form-outline mb-4">
-        <input type="text" id="username" class="form-control form-control-lg" />
-        <label class="form-label" for="username">
+      <div className="form-outline mb-4">
+        <input
+          value={username}
+          type="text"
+          id="username"
+          className="form-control form-control-lg"
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <label className="form-label" htmlFor="username">
           Your Name
         </label>
       </div>
 
-      <div class="form-outline mb-4">
+      <div className="form-outline mb-4">
         <input
+          value={password}
           type="password"
           id="password"
-          class="form-control form-control-lg"
+          className="form-control form-control-lg"
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <label class="form-label" for="password">
+        <label className="form-label" htmlFor="password">
           Password
         </label>
       </div>
 
-      <div class="d-flex justify-content-center">
+      <div className="d-flex justify-content-center">
         <button
           id="register"
           type="button"
-          class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+          onClick={handleRegistrationClick}
+          className="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
         >
           Register
         </button>
       </div>
 
-      <p class="text-center text-muted mt-5 mb-0">
+      <p className="text-center text-muted mt-5 mb-0">
         Have already an account?
-        <a href="/html/login.html" class="fw-bold text-body">
+        <Link href="/html/login.html" className="fw-bold text-body" to="/login">
           <u>Login here</u>
-        </a>
+        </Link>
       </p>
     </form>
   )

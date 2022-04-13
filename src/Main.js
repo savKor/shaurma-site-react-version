@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { fetchShaurma } from './api/fetch-array.js'
 import { Footer } from './footer/footer.js'
 import { Header } from './header/index.js'
-import { Main } from './home-content/index.js'
+import { MainConten } from './main-content/index.js'
 
-export function PageTemplate() {
+export function MainPage() {
   const [shaurmaList, setShaurmaList] = useState(null)
   useEffect(() => {
     async function getShaurma() {
@@ -19,7 +19,7 @@ export function PageTemplate() {
     return (
       <div>
         <Header />
-        <Main shaurmaList={shaurmaList} />
+        <MainConten shaurmaList={shaurmaList} />
         <Footer />
       </div>
     )
