@@ -1,7 +1,3 @@
-import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { createHeader } from './header'
-import { createFooter } from './footer'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 import { fetchShaurma } from './api/fetch-array'
@@ -21,6 +17,8 @@ import { fetchAdditive } from './api/fetch-additive-array'
 import { deleteShaurmaInUserCart } from './api/fetch-cart'
 import { displayMap } from './order/map'
 import { addOrderToDatabase } from './api/fetch-order'
+import { Footer } from './footer/footer'
+import { Header } from './header'
 
 let shaurmaList = []
 let additiveList = []
@@ -31,14 +29,12 @@ async function renderPageTemplate() {
   shaurmaList = await fetchShaurma()
   additiveList = await fetchAdditive()
   const order = true
-  const headerHTML = createHeader(shaurmaList, order)
-  const mainHTML = createOrderForm(shaurmaList, additiveList)
-  const footerHTML = createFooter()
-
-  document.body.insertAdjacentHTML('afterbegin', footerHTML)
-  document.body.insertAdjacentHTML('afterbegin', mainHTML)
-  document.body.insertAdjacentHTML('afterbegin', headerHTML)
-  await displayMap(getCoordinates)
+  return (
+    <div>
+      <Header />
+      <Footer />
+    </div>
+  )
 }
 
 async function addShaurmaInOrder() {

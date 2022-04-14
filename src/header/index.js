@@ -1,9 +1,9 @@
 import { Navbar } from './navbar/navbar'
 
-export function Header() {
+export function Header(props) {
   return (
     <header>
-      <Navbar />
+      <Navbar shaurmaList={props.shaurmaList} />
     </header>
   )
 }

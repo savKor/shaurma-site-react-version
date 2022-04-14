@@ -1,7 +1,7 @@
-export function createNick(username) {
+export function Nick(prop) {
   return (
-    <a class="navbar-brand" href="">
-      <strong>${username}</strong>
-    </a>
+    <div className="navbar-brand">
+      <strong>{prop.username}</strong>
+    </div>
   )
 }

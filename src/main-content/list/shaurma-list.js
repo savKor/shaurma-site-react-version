@@ -18,7 +18,10 @@ export function ListOfCards(props) {
       >
         <img
           id="image-shaurma"
-          src="../images/Depositphotos_73527551_l-2015-pic905-895x505-54479.jpg"
+          src={
+            process.env.PUBLIC_URL +
+            'Depositphotos_73527551_l-2015-pic905-895x505-54479.jpg'
+          }
           className="card-img-top"
           alt="..."
         ></img>

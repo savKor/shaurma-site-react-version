@@ -1,4 +1,4 @@
-export function Cart() {
+export function Cart(props) {
   return (
     <button
       id="shop-cart"

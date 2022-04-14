@@ -1,9 +1,17 @@
+import { createStorage } from '../../../../storage/storage'
+
 export function ExitButton() {
+  function onExitClick() {
+    localStorage.removeItem('token')
+    createStorage()
+  }
+
   return (
     <button
       id="exit-button"
       type="button"
-      class="btn btn-sm btn-outline-secondary"
+      className="btn btn-sm btn-outline-secondary"
+      onClick={onExitClick}
     >
       Exit
     </button>

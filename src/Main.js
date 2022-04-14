@@ -13,12 +13,12 @@ export function MainPage() {
     }
     getShaurma()
   }, [])
-  console.log(shaurmaList)
+  console.log(localStorage.getItem('token'))
 
   if (shaurmaList !== null) {
     return (
       <div>
-        <Header />
+        <Header shaurmaList={shaurmaList} />
         <MainConten shaurmaList={shaurmaList} />
         <Footer />
       </div>
