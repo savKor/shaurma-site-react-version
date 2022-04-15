@@ -14,6 +14,6 @@ export function parseJwt(token) {
 
 export const userToken = localStorage.getItem('token')
 
-export function checkUserLoggedIn() {
-  return typeof userToken === 'string' && userToken !== ''
+export function checkUserLoggedIn(userToken) {
+  return typeof userToken === 'string' && userToken !== '' && userToken !== null
 }

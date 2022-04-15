@@ -1,27 +1,15 @@
 import { parseJwt, userToken, checkUserLoggedIn } from '../api/token'
 
-const loggedIn = checkUserLoggedIn()
-
-const userData = {
-  token: userToken,
-  username: loggedIn ? parseJwt(userToken).username : '',
-  loggedIn,
-}
-
 export const storage = {
-  user: userData,
+  user: createUserDataStorage(userToken),
 }
 
-export function createStorage() {
-  const loggedIn = checkUserLoggedIn()
-
+export function createUserDataStorage(userToken) {
+  const loggedIn = checkUserLoggedIn(userToken)
   const userData = {
     token: userToken,
     username: loggedIn ? parseJwt(userToken).username : '',
     loggedIn,
   }
-  const storage = {
-    user: userData,
-  }
-  return storage
+  return userData
 }

@@ -1,9 +1,9 @@
-import { createStorage } from '../../../../storage/storage'
+import { useNavigate } from 'react-router-dom'
 
 export function ExitButton() {
+  const navigate = useNavigate()
   function onExitClick() {
     localStorage.removeItem('token')
-    createStorage()
   }
 
   return (

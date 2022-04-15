@@ -1,6 +1,4 @@
 #cart-element {
-  width: 20px;
-  height: 20px;
   stroke: cornflowerblue;
   fill: none;
   stroke-width: 2px;
@@ -44,11 +42,9 @@
 #shop-cart {
   display: flex;
   text-decoration: none;
-  width: 190px;
   height: 30px;
   outline: none;
   box-shadow: none;
-  margin-right: 20px;
 }
 
 #image-shaurma {
