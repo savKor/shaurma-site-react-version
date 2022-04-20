@@ -27,6 +27,7 @@ export function LoginForm() {
     } else {
       const dataKey = result.data
       localStorage.setItem('token', dataKey.token)
+      console.log(localStorage)
       navigate('/')
     }
   }

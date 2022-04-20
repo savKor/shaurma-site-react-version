@@ -2,20 +2,18 @@ import { Cart } from './cart/cart'
 import { Nick } from './nickname/nickname'
 import { SignUpButton } from './sing-up/sign-up'
 import { ExitButton } from './exit/exit'
-import { useEffect, useState } from 'react'
-import { createUserDataStorage, storage } from '../../../storage/storage'
+import { useContext, useEffect } from 'react'
+import { createUserData } from '../../../storage/storage'
+import { Context } from '../navbar'
 
 export function Navigation(props) {
-  const [storageUser, setStorage] = useState(storage.user)
-  const newStorage = createUserDataStorage(localStorage.getItem('token'))
-
-  console.log(newStorage)
+  const { storageUser, setStorage } = useContext(Context)
+  const newStorage = createUserData(localStorage.getItem('token'))
 
   useEffect(() => {
     function getNewStorageInfo() {
       setStorage(newStorage)
     }
-    debugger
 
     getNewStorageInfo()
   }, [newStorage.loggedIn])

@@ -1,10 +1,10 @@
 import { parseJwt, userToken, checkUserLoggedIn } from '../api/token'
 
 export const storage = {
-  user: createUserDataStorage(userToken),
+  user: createUserData(userToken),
 }
 
-export function createUserDataStorage(userToken) {
+export function createUserData(userToken) {
   const loggedIn = checkUserLoggedIn(userToken)
   const userData = {
     token: userToken,

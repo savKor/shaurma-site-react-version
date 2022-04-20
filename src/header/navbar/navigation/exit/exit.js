@@ -1,9 +1,15 @@
-import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import { createUserData } from '../../../../storage/storage'
+import { Context } from '../../navbar'
 
 export function ExitButton() {
-  const navigate = useNavigate()
+  const { storageUser, setStorage } = useContext(Context)
+
   function onExitClick() {
     localStorage.removeItem('token')
+    setStorage(createUserData(localStorage.getItem('token')))
+    debugger
+    console.log(storageUser)
   }
 
   return (

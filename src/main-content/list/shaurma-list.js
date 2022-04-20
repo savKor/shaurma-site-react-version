@@ -6,7 +6,7 @@ export function ListOfCards(props) {
   for (let i = 0; i < shaurmaList.length; i++) {
     const nameOfShaurma = shaurmaList[i].name
     const costOfShaurma = shaurmaList[i].cost
-    const idOfShaurma = `button-add_${shaurmaList[i]._id}`
+    const idOfShaurmaButton = `button-add_${shaurmaList[i]._id}`
     const idOfCardShaurma = `card_${shaurmaList[i]._id}`
     const statusShaurmaInCart = shaurmaList[i].inCart
 
@@ -32,7 +32,8 @@ export function ListOfCards(props) {
             <div>
               <Button
                 statusShaurmaInCart={statusShaurmaInCart}
-                idOfShaurma={idOfShaurma}
+                idOfShaurma={idOfShaurmaButton}
+                shaurmaList={shaurmaList}
               />
             </div>
           </div>
@@ -42,5 +43,12 @@ export function ListOfCards(props) {
     listOfCards[i] = cardsOfShaurma
   }
 
-  return listOfCards
+  return (
+    <div
+      id="card-list"
+      className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-md-3 row-cols-md-4 g-3"
+    >
+      {listOfCards}
+    </div>
+  )
 }
