@@ -1,17 +1,6 @@
-import {
-  getShaurmaCost,
-  markCostThatNewShaurmaAddedInCart,
-  markCostThatWereDeletedFromCart,
-} from './cost-of-shaurma/full-cost-of-shaurma'
-import {
-  addNewAddedShaurmaInCart,
-  enableShaurmaListInCart,
-  getShaurma,
-  markShaurmaItemDeletedFromModalCart,
-} from './shaurma-in-cart/shaurma-list-in-cart'
+import { ListOfCards } from './shaurma-in-cart/shaurma-list-in-cart'
 
 export function createModal(shaurmaList) {
-  const shaurma = getShaurma(shaurmaList)
   const cost = getShaurmaCost(shaurmaList)
 
   return (
@@ -36,7 +25,7 @@ export function createModal(shaurmaList) {
             ></button>
           </div>
           <div id="cart-with-shaurma" class="modal-body">
-            {shaurma}
+            <ListOfCards shaurmaList={shaurmaList}></ListOfCards>
           </div>
           <div class="modal-footer">
             <strong id="fullCostOfShaurma">{cost}</strong>
@@ -48,27 +37,4 @@ export function createModal(shaurmaList) {
       </div>
     </div>
   )
-}
-
-export function enableModal(onAddInCart) {
-  enableShaurmaListInCart(onAddInCart)
-}
-
-export function markModalThatFullCostOfShaurmaHasChange(
-  shaurmaId,
-  shaurmaList,
-) {
-  markCostThatNewShaurmaAddedInCart(shaurmaId, shaurmaList)
-}
-
-export function markShaurmaItemDeletedInCartModal(shaurmaId, shaurmaList) {
-  markShaurmaItemDeletedFromModalCart(shaurmaId)
-  markCostThatWereDeletedFromCart(shaurmaId, shaurmaList)
-}
-
-export function addNewShaurmaInModal(shaurmaId, shaurmaList) {
-  const newShaurma = addNewAddedShaurmaInCart(shaurmaId, shaurmaList)
-  document
-    .getElementById('cart-with-shaurma')
-    .insertAdjacentHTML('afterbegin', newShaurma)
 }

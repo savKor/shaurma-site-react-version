@@ -1,11 +1,10 @@
-export function createShaurmaCardInCart(
-  idOfCard,
-  nameOfShaurma,
-  costOfShaurma,
-  idOfShaurma,
-) {
+export function ShaurmaCardInCart(props) {
   return (
-    <div id={idOfCard} className="card mb-3" style={{ maxWidth: '540px' }}>
+    <div
+      id={props.idOfCard}
+      className="card mb-3"
+      style={{ maxWidth: '540px' }}
+    >
       <div className="row g-0">
         <div className="col-md-4">
           <img
@@ -17,12 +16,12 @@ export function createShaurmaCardInCart(
         </div>
         <div className="col-md-8">
           <div className="card-body">
-            <h5 className="card-title">{nameOfShaurma}</h5>
-            <p className="card-text">Цена: {costOfShaurma}</p>
+            <h5 className="card-title">{props.nameOfShaurma}</h5>
+            <p className="card-text">Цена: {props.costOfShaurma}</p>
             <button
               type="button"
               className="delete-from-cart btn btn-primary"
-              id={idOfShaurma}
+              id={props.idOfShaurma}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -5,21 +5,29 @@ import {
 } from '../../../api/fetch-cart'
 import { storage } from '../../../storage/storage'
 
-export function DisabledButton(props) {
-  const splitId = props.idOfShaurma.split('_')
+export const Context = createContext({
+  storageUser: '',
+  setStorage: () => {},
+})
 
-  /*  async function deleteFromCart(idOfShaurma) {
+export function DisabledButton(props) {
+  const { statusInCart, setStatusInCart } = useContext(Context)
+  const splitId = props.idOfShaurma.split('_')
+  const shaurmaId = splitId[1]
+
+  async function deleteFromCart() {
     if (storage.user.loggedIn === true) {
-      await deleteShaurmaInUserCart({ idOfShaurma })
+      await deleteShaurmaInUserCart({ shaurmaId })
       setStatusInCart(false)
     }
   }
-  */
+
   return (
     <button
       type="button"
       className="delete-from-main btn btn-primary"
       id={props.idOfShaurma}
+      onClick={deleteFromCart}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -36,20 +44,23 @@ export function DisabledButton(props) {
 }
 
 export function EnableButton(props) {
+  const { statusInCart, setStatusInCart } = useContext(Context)
   const splitId = props.idOfShaurma.split('_')
+  const shaurmaId = splitId[1]
 
-  /*  async function addInCart(idOfShaurma) {
+  async function addInCart() {
     if (storage.user.loggedIn === true) {
-      await putShaurmaInUserCart({ idOfShaurma })
+      await putShaurmaInUserCart({ shaurmaId })
       setStatusInCart(true)
     }
   }
-*/
+
   return (
     <button
       type="button"
       className="add-in-the-cart btn btn-primary"
       id={props.idOfShaurma}
+      onClick={addInCart}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -67,9 +78,17 @@ export function EnableButton(props) {
 
 export function Button(props) {
   const [statusInCart, setStatusInCart] = useState(props.statusShaurmaInCart)
-
+  const value = { statusInCart, setStatusInCart }
   if (statusInCart === false) {
-    return <EnableButton idOfShaurma={props.idOfShaurma} />
+    return (
+      <Context.Provider value={value}>
+        <EnableButton idOfShaurma={props.idOfShaurma} />
+      </Context.Provider>
+    )
   }
-  return <DisabledButton idOfShaurma={props.idOfShaurma} />
+  return (
+    <Context.Provider value={value}>
+      <DisabledButton idOfShaurma={props.idOfShaurma} />
+    </Context.Provider>
+  )
 }
