@@ -14,13 +14,11 @@ export function Navbar(props) {
   const value = { storageUser, setStorage }
 
   return (
-    <Context.Provider value={value}>
-      <div className="navbar navbar-dark bg-dark">
-        <div className="container">
-          <Logo />
-          <Navigation shaurmaList={props.shaurmaList} />
-        </div>
+    <div className="navbar navbar-dark bg-dark">
+      <div className="container">
+        <Logo />
+        <Navigation shaurmaList={props.shaurmaList} />
       </div>
-    </Context.Provider>
+    </div>
   )
 }

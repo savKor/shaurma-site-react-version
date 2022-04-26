@@ -4,10 +4,10 @@ import { SignUpButton } from './sing-up/sign-up'
 import { ExitButton } from './exit/exit'
 import { useContext, useEffect } from 'react'
 import { createUserData } from '../../../storage/storage'
-import { Context } from '../navbar'
+import { ContextWeb } from '../../../App'
 
 export function Navigation(props) {
-  const { storageUser, setStorage } = useContext(Context)
+  const { storageUser, setStorage } = useContext(ContextWeb)
   const newStorage = createUserData(localStorage.getItem('token'))
 
   useEffect(() => {

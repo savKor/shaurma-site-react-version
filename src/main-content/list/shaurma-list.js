@@ -1,6 +1,19 @@
 import { Button } from './button/button'
 
 export function ListOfCards(props) {
+  const listOfCards = creatShaurmaCards(props)
+
+  return (
+    <div
+      id="card-list"
+      className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-md-3 row-cols-md-4 g-3"
+    >
+      {listOfCards}
+    </div>
+  )
+}
+
+function creatShaurmaCards(props) {
   const listOfCards = []
   const shaurmaList = props.shaurmaList
   for (let i = 0; i < shaurmaList.length; i++) {
@@ -42,13 +55,5 @@ export function ListOfCards(props) {
     )
     listOfCards[i] = cardsOfShaurma
   }
-
-  return (
-    <div
-      id="card-list"
-      className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-md-3 row-cols-md-4 g-3"
-    >
-      {listOfCards}
-    </div>
-  )
+  return listOfCards
 }

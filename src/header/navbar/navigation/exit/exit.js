@@ -1,9 +1,10 @@
 import { useContext } from 'react'
+import { ContextWeb } from '../../../../App'
 import { createUserData } from '../../../../storage/storage'
 import { Context } from '../../navbar'
 
 export function ExitButton() {
-  const { storageUser, setStorage } = useContext(Context)
+  const { storageUser, setStorage } = useContext(ContextWeb)
 
   function onExitClick() {
     localStorage.removeItem('token')

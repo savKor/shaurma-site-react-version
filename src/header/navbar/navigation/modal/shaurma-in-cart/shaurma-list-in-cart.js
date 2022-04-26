@@ -1,6 +1,6 @@
 import { ShaurmaCardInCart } from './shaurma-card-in-cart/shaurma-card'
 
-function createListOfCards(shaurmaList) {
+export function ListOfCards(shaurmaList) {
   const listOfCards = []
 
   for (let i = 0; i < shaurmaList.length; i++) {
