@@ -1,7 +1,10 @@
+import { useContext } from 'react'
+import { ContextShaurmaList } from '../../App'
 import { Button } from './button/button'
 
-export function ListOfCards(props) {
-  const listOfCards = creatShaurmaCards(props)
+export function ListOfCards() {
+  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
+  const listOfCards = creatShaurmaCards(shaurmaList)
 
   return (
     <div
@@ -15,7 +18,7 @@ export function ListOfCards(props) {
 
 function creatShaurmaCards(props) {
   const listOfCards = []
-  const shaurmaList = props.shaurmaList
+  const shaurmaList = props
   for (let i = 0; i < shaurmaList.length; i++) {
     const nameOfShaurma = shaurmaList[i].name
     const costOfShaurma = shaurmaList[i].cost

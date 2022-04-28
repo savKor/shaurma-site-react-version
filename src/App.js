@@ -1,5 +1,6 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { fetchShaurma } from './api/fetch-array'
 import { Error } from './Error'
 import { LoginPage } from './Login'
 import { MainPage } from './Main'
@@ -24,6 +25,16 @@ function App() {
   const storageOfUserInfo = { storageUser, setStorage }
 
   const shuarma = { shaurmaList, setShaurmaList }
+
+  useEffect(() => {
+    debugger
+    async function getShaurma() {
+      const shaurmaFromServer = await fetchShaurma()
+      setShaurmaList(shaurmaFromServer)
+    }
+
+    getShaurma()
+  }, [])
 
   return (
     <Router>

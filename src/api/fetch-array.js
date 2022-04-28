@@ -10,6 +10,7 @@ export async function fetchShaurma() {
   const commits = await response.json()
 
   const result = await commits
+  debugger
   return result
 }
 

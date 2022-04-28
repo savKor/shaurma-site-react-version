@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { deleteToken } from '../../../../api/token'
 import { ContextUser } from '../../../../App'
 import { createUserData } from '../../../../storage/storage'
 import { Context } from '../../navbar'
@@ -7,7 +8,7 @@ export function ExitButton() {
   const { storageUser, setStorage } = useContext(ContextUser)
 
   function onExitClick() {
-    localStorage.removeItem('token')
+    deleteToken()
     setStorage(createUserData(localStorage.getItem('token')))
     debugger
     console.log(storageUser)

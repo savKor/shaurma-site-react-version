@@ -12,7 +12,17 @@ export function parseJwt(token) {
   return JSON.parse(jsonPayload)
 }
 
-export const userToken = localStorage.getItem('token')
+export let userToken = localStorage.getItem('token')
+
+export function setToken(value) {
+  localStorage.setItem('token', value)
+  userToken = localStorage.getItem('token')
+}
+
+export function deleteToken() {
+  localStorage.removeItem('token')
+  userToken = localStorage.getItem('token')
+}
 
 export function checkUserLoggedIn(userToken) {
   return typeof userToken === 'string' && userToken !== '' && userToken !== null

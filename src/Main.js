@@ -1,20 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { fetchShaurma } from './api/fetch-array.js'
+import { ContextShaurmaList } from './App.js'
 import { Footer } from './footer/footer.js'
 import { Header } from './header/index.js'
 import { MainConten } from './main-content/index.js'
 
 export function MainPage() {
-  const [shaurmaList, setShaurmaList] = useState(null)
-
-  useEffect(() => {
-    async function getShaurma() {
-      const shaurmaFromServer = await fetchShaurma()
-      setShaurmaList(shaurmaFromServer)
-    }
-
-    getShaurma()
-  }, [])
+  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
 
   if (shaurmaList !== null) {
     return (

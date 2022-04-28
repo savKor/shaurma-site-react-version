@@ -8,15 +8,6 @@ import { ContextUser } from '../../../App'
 
 export function Navigation(props) {
   const { storageUser, setStorage } = useContext(ContextUser)
-  const newStorage = createUserData(localStorage.getItem('token'))
-
-  useEffect(() => {
-    function getNewStorageInfo() {
-      setStorage(newStorage)
-    }
-
-    getNewStorageInfo()
-  }, [newStorage.loggedIn])
 
   if (storageUser.loggedIn === true) {
     console.log(storageUser)

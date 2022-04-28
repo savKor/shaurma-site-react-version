@@ -1,10 +1,9 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import {
   deleteShaurmaInUserCart,
   putShaurmaInUserCart,
 } from '../../../api/fetch-cart'
 import { ContextUser } from '../../../App'
-import { createUserData, storage } from '../../../storage/storage'
 
 export const ContextStatusInCart = createContext({
   statusInCart: '',
@@ -49,12 +48,10 @@ export function EnableButton(props) {
   const splitId = props.idOfShaurma.split('_')
   const shaurmaId = splitId[1]
 
-  debugger
   async function addInCart() {
     if (props.loggedIn === true) {
       await putShaurmaInUserCart({ shaurmaId })
       setStatusInCart(true)
-    } else {
     }
   }
 
@@ -81,18 +78,9 @@ export function EnableButton(props) {
 
 export function Button(props) {
   const [statusInCart, setStatusInCart] = useState(props.statusShaurmaInCart)
+  const { storageUser } = useContext(ContextUser)
+
   const value = { statusInCart, setStatusInCart }
-  const { storageUser, setStorage } = useContext(ContextUser)
-
-  const newStorage = createUserData(localStorage.getItem('token'))
-
-  useEffect(() => {
-    function getNewStorageInfo() {
-      setStorage(newStorage)
-    }
-
-    getNewStorageInfo()
-  }, [newStorage.loggedIn])
 
   if (statusInCart === false || storageUser.loggedIn === false) {
     return (
