@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
-import { fetchShaurma } from './api/fetch-array.js'
+import { useContext } from 'react'
 import { ContextShaurmaList } from './App.js'
 import { Footer } from './footer/footer.js'
 import { Header } from './header/index.js'
