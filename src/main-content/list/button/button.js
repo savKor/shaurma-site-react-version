@@ -1,22 +1,23 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import {
   deleteShaurmaInUserCart,
   putShaurmaInUserCart,
 } from '../../../api/fetch-cart'
-import { storage } from '../../../storage/storage'
+import { ContextUser } from '../../../App'
+import { createUserData, storage } from '../../../storage/storage'
 
-export const Context = createContext({
-  storageUser: '',
-  setStorage: () => {},
+export const ContextStatusInCart = createContext({
+  statusInCart: '',
+  setStatusInCart: () => {},
 })
 
 export function DisabledButton(props) {
-  const { statusInCart, setStatusInCart } = useContext(Context)
+  const { statusInCart, setStatusInCart } = useContext(ContextStatusInCart)
   const splitId = props.idOfShaurma.split('_')
   const shaurmaId = splitId[1]
 
   async function deleteFromCart() {
-    if (storage.user.loggedIn === true) {
+    if (props.loggedIn === true) {
       await deleteShaurmaInUserCart({ shaurmaId })
       setStatusInCart(false)
     }
@@ -44,14 +45,16 @@ export function DisabledButton(props) {
 }
 
 export function EnableButton(props) {
-  const { statusInCart, setStatusInCart } = useContext(Context)
+  const { statusInCart, setStatusInCart } = useContext(ContextStatusInCart)
   const splitId = props.idOfShaurma.split('_')
   const shaurmaId = splitId[1]
 
+  debugger
   async function addInCart() {
-    if (storage.user.loggedIn === true) {
+    if (props.loggedIn === true) {
       await putShaurmaInUserCart({ shaurmaId })
       setStatusInCart(true)
+    } else {
     }
   }
 
@@ -79,16 +82,34 @@ export function EnableButton(props) {
 export function Button(props) {
   const [statusInCart, setStatusInCart] = useState(props.statusShaurmaInCart)
   const value = { statusInCart, setStatusInCart }
-  if (statusInCart === false) {
+  const { storageUser, setStorage } = useContext(ContextUser)
+
+  const newStorage = createUserData(localStorage.getItem('token'))
+
+  useEffect(() => {
+    function getNewStorageInfo() {
+      setStorage(newStorage)
+    }
+
+    getNewStorageInfo()
+  }, [newStorage.loggedIn])
+
+  if (statusInCart === false || storageUser.loggedIn === false) {
     return (
-      <Context.Provider value={value}>
-        <EnableButton idOfShaurma={props.idOfShaurma} />
-      </Context.Provider>
+      <ContextStatusInCart.Provider value={value}>
+        <EnableButton
+          idOfShaurma={props.idOfShaurma}
+          loggedIn={storageUser.loggedIn}
+        />
+      </ContextStatusInCart.Provider>
     )
   }
   return (
-    <Context.Provider value={value}>
-      <DisabledButton idOfShaurma={props.idOfShaurma} />
-    </Context.Provider>
+    <ContextStatusInCart.Provider value={value}>
+      <DisabledButton
+        idOfShaurma={props.idOfShaurma}
+        loggedIn={storageUser.loggedIn}
+      />
+    </ContextStatusInCart.Provider>
   )
 }

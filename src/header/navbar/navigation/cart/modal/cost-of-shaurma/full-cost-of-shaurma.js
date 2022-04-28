@@ -1,3 +1,5 @@
+import { storage } from '../../../../../../storage/index'
+
 function getListOfCostsOfShaurma(shaurmaList) {
   const costOfEveryShaurma = []
 
@@ -31,18 +33,13 @@ export function getShaurmaCost(shaurmaList) {
 }
 
 function createStatusOfCostInCart(fullCost) {
+  let cartStatus
   if (fullCost !== 0) {
-    return (
-      <p>
-        Вся стоимость: <var id="fullCost">${fullCost}</var> rub
-      </p>
-    )
+    cartStatus = /* html */ `Вся стоимость: <var id="fullCost">${fullCost}</var> rub`
+  } else {
+    cartStatus = /* html */ `Вся стоимость: <var id="fullCost">0</var>`
   }
-  return (
-    <p>
-      Вся стоимость: <var id="fullCost">0</var>
-    </p>
-  )
+  return cartStatus
 }
 
 export function markCostThatNewShaurmaAddedInCart(shaurmaId, shaurmaList) {
@@ -54,7 +51,9 @@ export function markCostThatNewShaurmaAddedInCart(shaurmaId, shaurmaList) {
     }
   }
   const newCost = createStatusOfCostInCart(fullCost)
-  document.getElementById('fullCostOfShaurma').innerHTML = { newCost }
+  document.getElementById(
+    'fullCostOfShaurma',
+  ).innerHTML = /* html */ `${newCost}`
 }
 
 export function markCostThatWereDeletedFromCart(shaurmaId, shaurmaList) {
@@ -66,5 +65,7 @@ export function markCostThatWereDeletedFromCart(shaurmaId, shaurmaList) {
     }
   }
   const newCost = createStatusOfCostInCart(fullCost)
-  document.getElementById('fullCostOfShaurma').innerHTML = { newCost }
+  document.getElementById(
+    'fullCostOfShaurma',
+  ).innerHTML = /* html */ `${newCost}`
 }
