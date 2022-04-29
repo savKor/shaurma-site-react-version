@@ -83,6 +83,7 @@ export function Button(props) {
   const value = { statusInCart, setStatusInCart }
 
   if (statusInCart === false || storageUser.loggedIn === false) {
+    debugger
     return (
       <ContextStatusInCart.Provider value={value}>
         <EnableButton
@@ -92,6 +93,8 @@ export function Button(props) {
       </ContextStatusInCart.Provider>
     )
   }
+
+  debugger
   return (
     <ContextStatusInCart.Provider value={value}>
       <DisabledButton

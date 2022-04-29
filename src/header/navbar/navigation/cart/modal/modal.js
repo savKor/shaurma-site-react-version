@@ -1,29 +1,32 @@
+import { ListOfCards } from './shaurma-in-cart/shaurma-list-in-cart'
+
 export function Modal() {
   return (
     <div
-      class="modal fade"
+      className="modal fade"
       id="cartModal"
-      tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div id="modal-dialog" class="modal-dialog modal-dialog-scrollable">
-        <div id="modal-content" class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
+      <div id="modal-dialog" className="modal-dialog modal-dialog-scrollable">
+        <div id="modal-content" className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="exampleModalLabel">
               Modal title
             </h5>
             <button
               type="button"
-              class="btn-close"
+              className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
           </div>
-          <div id="cart-with-shaurma" class="modal-body"></div>
-          <div class="modal-footer">
+          <div id="cart-with-shaurma" className="modal-body">
+            <ListOfCards></ListOfCards>
+          </div>
+          <div className="modal-footer">
             <strong id="fullCostOfShaurma"></strong>
-            <a type="button" class="btn btn-primary" href="./order.html">
+            <a type="button" className="btn btn-primary" href="./order.html">
               Оформить заказ
             </a>
           </div>

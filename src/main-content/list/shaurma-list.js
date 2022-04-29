@@ -4,21 +4,9 @@ import { Button } from './button/button'
 
 export function ListOfCards() {
   const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
-  const listOfCards = creatShaurmaCards(shaurmaList)
 
-  return (
-    <div
-      id="card-list"
-      className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-md-3 row-cols-md-4 g-3"
-    >
-      {listOfCards}
-    </div>
-  )
-}
-
-function creatShaurmaCards(props) {
   const listOfCards = []
-  const shaurmaList = props
+
   for (let i = 0; i < shaurmaList.length; i++) {
     const nameOfShaurma = shaurmaList[i].name
     const costOfShaurma = shaurmaList[i].cost
@@ -26,6 +14,7 @@ function creatShaurmaCards(props) {
     const idOfCardShaurma = `card_${shaurmaList[i]._id}`
     const statusShaurmaInCart = shaurmaList[i].inCart
 
+    debugger
     const cardsOfShaurma = (
       <div
         className="shaurma-cards"
@@ -58,5 +47,13 @@ function creatShaurmaCards(props) {
     )
     listOfCards[i] = cardsOfShaurma
   }
-  return listOfCards
+
+  return (
+    <div
+      id="card-list"
+      className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-md-3 row-cols-md-4 g-3"
+    >
+      {listOfCards}
+    </div>
+  )
 }

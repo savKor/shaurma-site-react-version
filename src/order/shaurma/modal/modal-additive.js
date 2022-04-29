@@ -8,7 +8,6 @@ export function createDefoltModal() {
     <div
       class="modal fade"
       id="additiveModal"
-      tabindex="-1"
       aria-labelledby="additiveModalLabel"
       aria-hidden="true"
     >

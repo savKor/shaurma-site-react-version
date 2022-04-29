@@ -11,8 +11,8 @@ function createListOfCards(additiveList, shaurmaId, fullInfoAboutOrder) {
     const nameOfAdditive = additiveList[i].name
     const costOfAdditive = additiveList[i].cost
     const imageOfAdditive = additiveList[i].image
-    const idOfCard = /* html */ `modal-card_${additiveList[i]._id}`
-    const idOfAdditive = /* html */ `button-addition_${additiveList[i]._id}`
+    const idOfCard = `modal-card_${additiveList[i]._id}`
+    const idOfAdditive = `button-addition_${additiveList[i]._id}`
     const buttonAdditive = changeStatusOfAdditiveButton(
       fullInfoAboutOrder,
       shaurmaId,

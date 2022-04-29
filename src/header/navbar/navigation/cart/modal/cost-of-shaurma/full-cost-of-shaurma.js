@@ -35,9 +35,9 @@ export function getShaurmaCost(shaurmaList) {
 function createStatusOfCostInCart(fullCost) {
   let cartStatus
   if (fullCost !== 0) {
-    cartStatus = /* html */ `Вся стоимость: <var id="fullCost">${fullCost}</var> rub`
+    cartStatus = `Вся стоимость: <var id="fullCost">${fullCost}</var> rub`
   } else {
-    cartStatus = /* html */ `Вся стоимость: <var id="fullCost">0</var>`
+    cartStatus = `Вся стоимость: <var id="fullCost">0</var>`
   }
   return cartStatus
 }
@@ -51,9 +51,7 @@ export function markCostThatNewShaurmaAddedInCart(shaurmaId, shaurmaList) {
     }
   }
   const newCost = createStatusOfCostInCart(fullCost)
-  document.getElementById(
-    'fullCostOfShaurma',
-  ).innerHTML = /* html */ `${newCost}`
+  document.getElementById('fullCostOfShaurma').innerHTML = `${newCost}`
 }
 
 export function markCostThatWereDeletedFromCart(shaurmaId, shaurmaList) {
@@ -65,7 +63,5 @@ export function markCostThatWereDeletedFromCart(shaurmaId, shaurmaList) {
     }
   }
   const newCost = createStatusOfCostInCart(fullCost)
-  document.getElementById(
-    'fullCostOfShaurma',
-  ).innerHTML = /* html */ `${newCost}`
+  document.getElementById('fullCostOfShaurma').innerHTML = `${newCost}`
 }
