@@ -16,7 +16,6 @@ export function ShaurmaCardInCart({
 
   async function setStatus() {
     await deleteShaurmaInUserCart({ shaurmaId })
-    debugger
     setStatusInCart(false)
   }
 
