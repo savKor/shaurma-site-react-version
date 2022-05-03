@@ -1,24 +1,21 @@
 import { createContext, useContext, useState } from 'react'
+import { fetchShaurma } from '../../../api/fetch-array'
 import {
   deleteShaurmaInUserCart,
   putShaurmaInUserCart,
 } from '../../../api/fetch-cart'
-import { ContextUser } from '../../../App'
-
-export const ContextStatusInCart = createContext({
-  statusInCart: '',
-  setStatusInCart: () => {},
-})
+import { ContextShaurmaList, ContextUser } from '../../../App'
 
 export function DisabledButton(props) {
-  const { statusInCart, setStatusInCart } = useContext(ContextStatusInCart)
+  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
   const splitId = props.idOfShaurma.split('_')
   const shaurmaId = splitId[1]
 
   async function deleteFromCart() {
     if (props.loggedIn === true) {
       await deleteShaurmaInUserCart({ shaurmaId })
-      setStatusInCart(false)
+      const shaurmaFromServer = await fetchShaurma()
+      setShaurmaList(shaurmaFromServer)
     }
   }
 
@@ -44,14 +41,15 @@ export function DisabledButton(props) {
 }
 
 export function EnableButton(props) {
-  const { statusInCart, setStatusInCart } = useContext(ContextStatusInCart)
+  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
   const splitId = props.idOfShaurma.split('_')
   const shaurmaId = splitId[1]
 
   async function addInCart() {
     if (props.loggedIn === true) {
       await putShaurmaInUserCart({ shaurmaId })
-      setStatusInCart(true)
+      const shaurmaFromServer = await fetchShaurma()
+      setShaurmaList(shaurmaFromServer)
     }
   }
 
@@ -77,30 +75,23 @@ export function EnableButton(props) {
 }
 
 export function Button(props) {
-  const [statusInCart, setStatusInCart] = useState(props.statusShaurmaInCart)
   const { storageUser } = useContext(ContextUser)
 
-  const value = { statusInCart, setStatusInCart }
-
-  if (statusInCart === false || storageUser.loggedIn === false) {
+  if (props.statusShaurmaInCart === false || storageUser.loggedIn === false) {
     debugger
     return (
-      <ContextStatusInCart.Provider value={value}>
-        <EnableButton
-          idOfShaurma={props.idOfShaurma}
-          loggedIn={storageUser.loggedIn}
-        />
-      </ContextStatusInCart.Provider>
+      <EnableButton
+        idOfShaurma={props.idOfShaurma}
+        loggedIn={storageUser.loggedIn}
+      />
     )
   }
 
   debugger
   return (
-    <ContextStatusInCart.Provider value={value}>
-      <DisabledButton
-        idOfShaurma={props.idOfShaurma}
-        loggedIn={storageUser.loggedIn}
-      />
-    </ContextStatusInCart.Provider>
+    <DisabledButton
+      idOfShaurma={props.idOfShaurma}
+      loggedIn={storageUser.loggedIn}
+    />
   )
 }
