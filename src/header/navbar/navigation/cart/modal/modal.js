@@ -1,6 +1,39 @@
+import { useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { ContextShaurmaList, ContextUser } from '../../../../../App'
 import { ListOfCards } from './shaurma-in-cart/shaurma-list-in-cart'
 
 export function Modal() {
+  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
+
+  function getListOfShaurmaInCart(shaurmaList) {
+    const costOfEveryShaurma = []
+
+    for (let i = 0; i < shaurmaList.length; i++) {
+      if (shaurmaList[i].inCart === true) {
+        const costOfShaurma = shaurmaList[i].cost
+        costOfEveryShaurma[i] = costOfShaurma
+      } else {
+        costOfEveryShaurma[i] = 0
+      }
+    }
+
+    return costOfEveryShaurma
+  }
+
+  function createFullCostOfShaurma(shaurmaList) {
+    const costOfEveryShaurma = getListOfShaurmaInCart(shaurmaList)
+    let fullCost = 0
+
+    for (let i = 0; i < costOfEveryShaurma.length; i++) {
+      fullCost += costOfEveryShaurma[i]
+    }
+
+    return fullCost
+  }
+
+  let cost = createFullCostOfShaurma(shaurmaList)
+
   return (
     <div
       className="modal fade"
@@ -25,10 +58,10 @@ export function Modal() {
             <ListOfCards></ListOfCards>
           </div>
           <div className="modal-footer">
-            <strong id="fullCostOfShaurma"></strong>
-            <a type="button" className="btn btn-primary" href="./order.html">
+            <strong id="fullCostOfShaurma">Вся стоимость: {cost} rub</strong>
+            <Link id="register" className="btn btn-primary" to="/registration">
               Оформить заказ
-            </a>
+            </Link>
           </div>
         </div>
       </div>
