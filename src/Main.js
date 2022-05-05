@@ -6,12 +6,12 @@ import { MainConten } from './main-content/index.js'
 
 export function MainPage() {
   const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
-
+  const pageOrder = false
   if (shaurmaList !== null) {
     return (
       <div>
-        <Header shaurmaList={shaurmaList} />
-        <MainConten shaurmaList={shaurmaList} />
+        <Header pageOrder={pageOrder} />
+        <MainConten />
         <Footer />
       </div>
     )

@@ -1,9 +1,9 @@
-export function createBackButton() {
+export function BackButton() {
   return (
     <a
       id="back-button"
       type="button"
-      class="btn btn-sm btn-outline-secondary"
+      className="btn btn-sm btn-outline-secondary"
       href="./home.html"
     >
       Back

@@ -4,6 +4,7 @@ import { fetchShaurma } from './api/fetch-array'
 import { Error } from './Error'
 import { LoginPage } from './Login'
 import { MainPage } from './Main'
+import { OrderPage } from './Order.js'
 import { RegistrationPage } from './Registration.js'
 import { storage } from './storage/storage'
 
@@ -53,6 +54,7 @@ function App() {
               <Route path="/" element={<MainPage />} />
               <Route path="/registration" element={<RegistrationPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/order" element={<OrderPage />} />
               <Route path="*" element={<Error />} />
             </Routes>
           </ContextStatusShaurmaInMain.Provider>

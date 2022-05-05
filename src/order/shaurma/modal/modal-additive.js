@@ -1,8 +1,3 @@
-import {
-  enableAddOrDeleteAdditive,
-  getAdditive,
-} from './additive-for-shaurma/additive'
-
 export function createDefoltModal() {
   return (
     <div
@@ -15,7 +10,7 @@ export function createDefoltModal() {
         <div id="modal-content" class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-              Добавляй своё *****
+              Добавляй своё
             </h5>
             <button
               type="button"
@@ -30,17 +25,4 @@ export function createDefoltModal() {
       </div>
     </div>
   )
-}
-
-export function enableAdditiveButtonModal(onHandleButtonAdditive) {
-  enableAddOrDeleteAdditive(onHandleButtonAdditive)
-}
-
-export function insertAndCreateAdditiveForModal(
-  additiveList,
-  shaurmaId,
-  fullInfoAboutOrder,
-) {
-  const additive = getAdditive(additiveList, shaurmaId, fullInfoAboutOrder)
-  document.getElementById('additives-to-choose-from').innerHTML = { additive }
 }

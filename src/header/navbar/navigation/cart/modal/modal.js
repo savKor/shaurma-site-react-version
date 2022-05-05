@@ -1,10 +1,15 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { ContextShaurmaList, ContextUser } from '../../../../../App'
+import Modal from 'react-modal'
 import { ListOfCards } from './shaurma-in-cart/shaurma-list-in-cart'
+import { ContextModalCart } from '../cart'
+import Box from '@mui/material/Box'
 
-export function Modal() {
+export function ModalCard() {
   const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
+  const { storageUser, setStorage } = useContext(ContextUser)
+  const { modalIsOpen, setIsOpen } = useContext(ContextModalCart)
 
   function getListOfShaurmaInCart(shaurmaList) {
     const costOfEveryShaurma = []
@@ -32,39 +37,64 @@ export function Modal() {
     return fullCost
   }
 
+  function closeModal() {
+    setIsOpen(false)
+  }
+
+  function alertMessage() {
+    alert('Залогиньтесь вначале')
+  }
+
+  function changeButton() {
+    let cartInfo
+    if (storageUser.loggedIn === true) {
+      cartInfo = (
+        <Link className="btn btn-primary" to="/order" onClick={closeModal}>
+          Оформить заказ
+        </Link>
+      )
+    } else {
+      cartInfo = (
+        <button className="btn btn-primary" onClick={alertMessage}>
+          Оформить заказ
+        </button>
+      )
+    }
+    return cartInfo
+  }
+
   let cost = createFullCostOfShaurma(shaurmaList)
+  let orderButton = changeButton()
 
   return (
-    <div
-      className="modal fade"
-      id="cartModal"
+    <Modal
+      isOpen={modalIsOpen}
+      id="modal-dialog"
+      className="modal-dialog modal-dialog-scrollable"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div id="modal-dialog" className="modal-dialog modal-dialog-scrollable">
-        <div id="modal-content" className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">
-              Modal title
-            </h5>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div id="cart-with-shaurma" className="modal-body">
-            <ListOfCards></ListOfCards>
-          </div>
-          <div className="modal-footer">
-            <strong id="fullCostOfShaurma">Вся стоимость: {cost} rub</strong>
-            <Link id="register" className="btn btn-primary" to="/registration">
-              Оформить заказ
-            </Link>
-          </div>
+      <div id="modal-content" className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title" id="exampleModalLabel">
+            Modal title
+          </h5>
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            onClick={closeModal}
+          ></button>
+        </div>
+        <div id="cart-with-shaurma" className="modal-body">
+          <ListOfCards></ListOfCards>
+        </div>
+        <div className="modal-footer">
+          <strong id="fullCostOfShaurma">Вся стоимость: {cost} rub</strong>
+          {orderButton}
         </div>
       </div>
-    </div>
+    </Modal>
   )
 }

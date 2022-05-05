@@ -1,10 +1,14 @@
+import { useContext } from 'react'
+import { ContextShaurmaList } from '../../App'
 import {
   createDefoltModal,
   enableAdditiveButtonModal,
   insertAndCreateAdditiveForModal,
 } from './modal/modal-additive'
 
-function createListOfCards(shaurmaList) {
+export function ListOfShaurmaCards() {
+  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
+
   const listOfCards = []
   for (let i = 0; i < shaurmaList.length; i++) {
     if (shaurmaList[i].inCart === true) {
@@ -59,57 +63,5 @@ function createListOfCards(shaurmaList) {
       listOfCards[i] = cardsOfShaurma
     }
   }
-  return listOfCards
-}
-
-export function createAdditivesForModal(
-  additiveList,
-  shaurmaId,
-  fullInfoAboutOrder,
-) {
-  insertAndCreateAdditiveForModal(additiveList, shaurmaId, fullInfoAboutOrder)
-}
-
-export function enableAdditiveAddOrDeleteOnShaurmaList(onHandleButtonAdditive) {
-  enableAdditiveButtonModal(onHandleButtonAdditive)
-}
-
-export function enableEventOpenModalOfShaurma(openAdditiveModal) {
-  document.getElementById('main-form').addEventListener('click', (event) => {
-    getIdOfShaurma(event, openAdditiveModal)
-  })
-}
-
-export function getShaurma(shaurmaList, additiveList) {
-  const shaurmaCards = createListOfCards(shaurmaList, additiveList)
-  const oneStringListOfCards = shaurmaCards.join('')
-  return oneStringListOfCards
-}
-
-async function getIdOfShaurma(event, openAdditiveModal) {
-  if (event.target.closest('.open-modal')) {
-    const shaurmaId = event.target.closest('.open-modal').id
-    const splitId = shaurmaId.split('_')
-    openAdditiveModal(splitId[1])
-  }
-}
-
-export function enableDeleteShaurma(onDeleteInCar) {
-  document.getElementById('main-form').addEventListener('click', (event) => {
-    onDeleteClick(event, onDeleteInCar)
-  })
-}
-
-async function onDeleteClick(event, onDeleteInCart) {
-  if (event.target.closest('.delete-from-cart')) {
-    const shaurmaId = event.target.closest('.delete-from-cart').id
-    debugger
-    const splitId = shaurmaId.split('_')
-    onDeleteInCart(splitId[1])
-  }
-}
-
-export function markShaurmaItemDeletedFromOrder(shaurmaId) {
-  const modalCard = document.getElementById(`shaurma-card_${shaurmaId}`)
-  modalCard.remove()
+  return <div>{listOfCards}</div>
 }
