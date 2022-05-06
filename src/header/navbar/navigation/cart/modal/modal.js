@@ -5,6 +5,7 @@ import Modal from 'react-modal'
 import { ListOfCards } from './shaurma-in-cart/shaurma-list-in-cart'
 import { ContextModalCart } from '../cart'
 import Box from '@mui/material/Box'
+import { fetchShaurma } from '../../../../../api/fetch-array'
 
 export function ModalCard() {
   const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
@@ -37,8 +38,10 @@ export function ModalCard() {
     return fullCost
   }
 
-  function closeModal() {
+  async function closeModal() {
     setIsOpen(false)
+    const shaurmaFromServer = await fetchShaurma()
+    setShaurmaList(shaurmaFromServer)
   }
 
   function alertMessage() {

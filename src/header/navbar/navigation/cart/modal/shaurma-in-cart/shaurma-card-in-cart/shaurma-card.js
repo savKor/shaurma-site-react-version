@@ -33,7 +33,7 @@ export function ShaurmaCardInCart({
             alt="..."
           ></img>
         </div>
-        <div className="col-md-8">
+        <div id="shaurma-info" className="col-md-8">
           <div className="card-body">
             <h5 className="card-title">{nameOfShaurma}</h5>
             <p className="card-text">Цена: {costOfShaurma}</p>

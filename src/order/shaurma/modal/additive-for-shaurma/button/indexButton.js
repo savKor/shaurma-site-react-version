@@ -1,4 +1,4 @@
-export function getDeleteButton(idOfAdditive) {
+export function DeleteButton(idOfAdditive) {
   return (
     <button
       type="button"
@@ -20,7 +20,7 @@ export function getDeleteButton(idOfAdditive) {
   )
 }
 
-export function getAddButton(idOfAdditive) {
+export function AddButton(idOfAdditive) {
   return (
     <button
       type="button"
@@ -59,9 +59,9 @@ export function changeStatusOfAdditiveButton(
   )
 
   if (additiveOfShaurma) {
-    buttonShaurma = getDeleteButton(idOfAdditive)
+    buttonShaurma = DeleteButton(idOfAdditive)
   } else {
-    buttonShaurma = getAddButton(idOfAdditive)
+    buttonShaurma = AddButton(idOfAdditive)
   }
 
   return buttonShaurma

@@ -18,19 +18,10 @@ export const ContextShaurmaList = createContext({
   setShaurmaList: () => {},
 })
 
-export const ContextStatusShaurmaInMain = createContext({
-  statusInCartOnMain: '',
-  setStatusInCartInMain: () => {},
-})
-
 function App() {
   const [shaurmaList, setShaurmaList] = useState(null)
 
   const [storageUser, setStorage] = useState(storage.user)
-
-  const [statusInCartInMain, setStatusInCartInMain] = useState()
-
-  const statusInMain = { statusInCartInMain, setStatusInCartInMain }
 
   const storageOfUserInfo = { storageUser, setStorage }
 
@@ -49,15 +40,13 @@ function App() {
     <Router>
       <ContextUser.Provider value={storageOfUserInfo}>
         <ContextShaurmaList.Provider value={shuarma}>
-          <ContextStatusShaurmaInMain.Provider value={statusInMain}>
-            <Routes>
-              <Route path="/" element={<MainPage />} />
-              <Route path="/registration" element={<RegistrationPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/order" element={<OrderPage />} />
-              <Route path="*" element={<Error />} />
-            </Routes>
-          </ContextStatusShaurmaInMain.Provider>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/registration" element={<RegistrationPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/order" element={<OrderPage />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
         </ContextShaurmaList.Provider>
       </ContextUser.Provider>
     </Router>
