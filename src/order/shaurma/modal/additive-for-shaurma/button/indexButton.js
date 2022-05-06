@@ -1,9 +1,12 @@
-export function DeleteButton(idOfAdditive) {
+import { useContext } from 'react'
+import { ContextAdditiveList } from '../../../../../Order'
+
+export function DeleteButton(props.idOfAdditive) {
   return (
     <button
       type="button"
       className="add-or-delete-additive btn btn-primary"
-      id={idOfAdditive}
+      id={props.idOfAdditive}
       eventName="delete"
     >
       <svg
@@ -20,13 +23,13 @@ export function DeleteButton(idOfAdditive) {
   )
 }
 
-export function AddButton(idOfAdditive) {
+export function AddButton(props.idOfAdditive) {
   return (
     <button
       type="button"
       className="add-or-delete-additive btn btn-primary"
       eventName="add"
-      id={idOfAdditive}
+      id={props.idOfAdditive}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -43,15 +46,12 @@ export function AddButton(idOfAdditive) {
   )
 }
 
-export function changeStatusOfAdditiveButton(
-  fullInfoAboutOrder,
-  shaurmaId,
-  idOfAdditive,
-) {
+export function AdditiveButton( props) {
+  const { shaurmaOrdered, setShaurmaOrdered } = useContext(ContextAdditiveList)
   let buttonShaurma
-  const additiveId = idOfAdditive.split('_')
-  const chosenShaurma = fullInfoAboutOrder.find(
-    (shaurma) => shaurmaId === shaurma.shaurmaId,
+  const additiveId = props.idOfAdditive.split('_')
+  const chosenShaurma = shaurmaOrdered.find(
+    (shaurma) => props.shaurmaId === shaurma.props.shaurmaId,
   )
 
   const additiveOfShaurma = chosenShaurma.additiveIdList.find(
@@ -59,9 +59,9 @@ export function changeStatusOfAdditiveButton(
   )
 
   if (additiveOfShaurma) {
-    buttonShaurma = DeleteButton(idOfAdditive)
+    buttonShaurma = DeleteButton(props.idOfAdditive)
   } else {
-    buttonShaurma = AddButton(idOfAdditive)
+    buttonShaurma = AddButton(props.idOfAdditive)
   }
 
   return buttonShaurma
