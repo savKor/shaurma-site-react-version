@@ -87,7 +87,7 @@ export function AddButton({ additiveId, newShaurmaOrdered }) {
 }
 
 export function AdditiveButton(props) {
-  const { shaurmaOrdered, setShaurmaOrdered } = useContext(ContextShaurmaOrder)
+  const { shaurmaOrdered } = useContext(ContextShaurmaOrder)
   const { idOfChosenShauma } = useContext(ContextShaurmaId)
 
   let buttonShaurma

@@ -1,5 +1,3 @@
-import { createContext, useMemo, useState } from 'react'
-import { storage } from '../../storage/storage'
 import { Logo } from './logo/logo'
 import { Navigation } from './navigation/navigation'
 

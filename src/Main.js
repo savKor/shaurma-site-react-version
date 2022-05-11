@@ -5,7 +5,7 @@ import { Header } from './header/index.js'
 import { MainConten } from './main-content/index.js'
 
 export function MainPage() {
-  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
+  const { shaurmaList } = useContext(ContextShaurmaList)
   const pageOrder = false
   if (shaurmaList !== null) {
     return (

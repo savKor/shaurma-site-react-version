@@ -1,10 +1,9 @@
-import { createContext, useContext, useEffect, useState } from 'react'
-import { fetchShaurma } from '../../../../../../api/fetch-array'
+import { useContext } from 'react'
 import { ContextShaurmaList } from '../../../../../../App'
 import { ShaurmaCardInCart } from './shaurma-card-in-cart/shaurma-card'
 
 export function ListOfCards() {
-  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
+  const { shaurmaList } = useContext(ContextShaurmaList)
 
   const listOfCards = []
 

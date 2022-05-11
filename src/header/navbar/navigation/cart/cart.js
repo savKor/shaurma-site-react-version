@@ -8,8 +8,8 @@ export const ContextModalCart = createContext({
 })
 
 export function Cart(props) {
-  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
-  const { storageUser, setStorage } = useContext(ContextUser)
+  const { shaurmaList } = useContext(ContextShaurmaList)
+  const { storageUser } = useContext(ContextUser)
   const [modalIsOpen, setIsOpen] = useState(false)
 
   const modalStatus = { modalIsOpen, setIsOpen }

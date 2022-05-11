@@ -3,7 +3,7 @@ import { ContextShaurmaList } from '../../App'
 import { Button } from './button/button'
 
 export function ListOfCards() {
-  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
+  const { shaurmaList } = useContext(ContextShaurmaList)
 
   const listOfCards = []
 

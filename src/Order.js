@@ -11,7 +11,7 @@ export const ContextShaurmaOrder = createContext({
 })
 
 export function OrderPage() {
-  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
+  const { shaurmaList } = useContext(ContextShaurmaList)
 
   const [shaurmaOrdered, setShaurmaOrdered] = useState()
 

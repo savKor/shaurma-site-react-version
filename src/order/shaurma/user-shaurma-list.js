@@ -33,7 +33,10 @@ export function ListOfShaurmaCards() {
         setShaurmaList(shaurmaFromServer)
       }
 
-      const valueOfChosenShauma = { idOfChosenShauma, setIdOfChosenShauma }
+      const contextValueOfChosenIdOfShauma = {
+        idOfChosenShauma,
+        setIdOfChosenShauma,
+      }
 
       const cardsOfShaurma = (
         <div id={idOfCard} className="user-order card mb-3">
@@ -62,7 +65,9 @@ export function ListOfShaurmaCards() {
                   Добавить добавки
                 </button>
                 <div id="additive-modal">
-                  <ContextShaurmaId.Provider value={valueOfChosenShauma}>
+                  <ContextShaurmaId.Provider
+                    value={contextValueOfChosenIdOfShauma}
+                  >
                     <ModalAdditive />
                   </ContextShaurmaId.Provider>
                 </div>
@@ -89,5 +94,10 @@ export function ListOfShaurmaCards() {
       listOfCards[i] = cardsOfShaurma
     }
   }
-  return <div>{listOfCards}</div>
+
+  if (listOfCards.length === 0) {
+    return <div className="user-order card mb-3">Добавь шаурму</div>
+  } else {
+    return <div>{listOfCards}</div>
+  }
 }

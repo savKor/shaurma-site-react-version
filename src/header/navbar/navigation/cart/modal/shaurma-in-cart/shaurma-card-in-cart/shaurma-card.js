@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { deleteShaurmaInUserCart } from '../../../../../../../api/fetch-cart'
 import { ContextShaurmaList } from '../../../../../../../App'
 import { fetchShaurma } from '../../../../../../../api/fetch-array'

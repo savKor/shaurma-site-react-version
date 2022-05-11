@@ -4,12 +4,11 @@ import { ContextShaurmaList, ContextUser } from '../../../../../App'
 import Modal from 'react-modal'
 import { ListOfCards } from './shaurma-in-cart/shaurma-list-in-cart'
 import { ContextModalCart } from '../cart'
-import Box from '@mui/material/Box'
 import { fetchShaurma } from '../../../../../api/fetch-array'
 
 export function ModalCard() {
   const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
-  const { storageUser, setStorage } = useContext(ContextUser)
+  const { storageUser } = useContext(ContextUser)
   const { modalIsOpen, setIsOpen } = useContext(ContextModalCart)
 
   function getListOfShaurmaInCart(shaurmaList) {

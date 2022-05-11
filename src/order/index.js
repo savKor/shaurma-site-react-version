@@ -1,25 +1,23 @@
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import { ListOfShaurmaCards } from './shaurma/user-shaurma-list'
-import { ContextShaurmaList } from '../App'
 import { ContextShaurmaOrder } from '../Order'
 import { addOrderToDatabase } from '../api/fetch-order'
 
 export function OrderForm() {
   const [coordinates, setCoonrdinates] = useState()
-  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
-  const { shaurmaOrdered, setShaurmaOrdered } = useContext(ContextShaurmaOrder)
+  const { shaurmaOrdered } = useContext(ContextShaurmaOrder)
 
   const mapContainer = useRef(null)
   mapboxgl.accessToken =
     'pk.eyJ1IjoicmFmY3J1IiwiYSI6ImNrendxaGwzMzAyYTMydXJ2aHB3dzJ4OWoifQ.wj9FjHmT9tlzBVeZXdx9Sw'
   const map = useRef(null)
-  const [lng, setLng] = useState(-70.9)
-  const [lat, setLat] = useState(42.35)
-  const [zoom, setZoom] = useState(9)
+  const [lng] = useState(-70.9)
+  const [lat] = useState(42.35)
+  const [zoom] = useState(9)
 
   useEffect(() => {
     if (map.current) return // initialize map only once

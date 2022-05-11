@@ -10,10 +10,10 @@ export const ContextAdditiveList = createContext({
 })
 
 export function ModalAdditive(props) {
-  const { idOfChosenShauma, setIdOfChosenShauma } = useContext(ContextShaurmaId)
+  const { setIdOfChosenShauma } = useContext(ContextShaurmaId)
   const [additiveList, setAdditiveList] = useState()
 
-  const additive = { additiveList, setAdditiveList }
+  const contextValueOfAdditive = { additiveList, setAdditiveList }
 
   async function closeModal() {
     setIdOfChosenShauma(undefined)
@@ -52,7 +52,7 @@ export function ModalAdditive(props) {
               ></button>
             </div>
             <div id="additives-to-choose-from" className="modal-body">
-              <ContextAdditiveList.Provider value={additive}>
+              <ContextAdditiveList.Provider value={contextValueOfAdditive}>
                 <ListOfAdditiveCards></ListOfAdditiveCards>
               </ContextAdditiveList.Provider>
             </div>

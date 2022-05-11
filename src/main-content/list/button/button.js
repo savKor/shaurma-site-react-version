@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { useContext } from 'react'
 import { fetchShaurma } from '../../../api/fetch-array'
 import {
   deleteShaurmaInUserCart,
@@ -7,7 +7,7 @@ import {
 import { ContextShaurmaList, ContextUser } from '../../../App'
 
 export function DisabledButton(props) {
-  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
+  const { setShaurmaList } = useContext(ContextShaurmaList)
   const splitId = props.idOfShaurma.split('_')
   const shaurmaId = splitId[1]
 
@@ -41,7 +41,7 @@ export function DisabledButton(props) {
 }
 
 export function EnableButton(props) {
-  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
+  const { setShaurmaList } = useContext(ContextShaurmaList)
   const splitId = props.idOfShaurma.split('_')
   const shaurmaId = splitId[1]
 

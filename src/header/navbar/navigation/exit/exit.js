@@ -3,10 +3,9 @@ import { fetchShaurma } from '../../../../api/fetch-array'
 import { deleteToken } from '../../../../api/token'
 import { ContextShaurmaList, ContextUser } from '../../../../App'
 import { createUserData } from '../../../../storage/storage'
-import { Context } from '../../navbar'
 
 export function ExitButton() {
-  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
+  const { setShaurmaList } = useContext(ContextShaurmaList)
   const { storageUser, setStorage } = useContext(ContextUser)
 
   async function onExitClick() {

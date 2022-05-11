@@ -3,7 +3,7 @@ import { ContextAdditiveList } from '../modal-additive'
 import { AdditiveButton } from './button/indexButton'
 
 export function ListOfAdditiveCards(props) {
-  const { additiveList, setAdditiveList } = useContext(ContextAdditiveList)
+  const { additiveList } = useContext(ContextAdditiveList)
   const listOfCards = []
 
   if (additiveList !== undefined) {
