@@ -1,41 +1,53 @@
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { fetchAdditive } from './api/fetch-additive-array'
 import { ContextShaurmaList } from './App'
 import { Footer } from './footer/footer'
 import { Header } from './header'
 import { OrderForm } from './order/index'
 
-export const ContextAdditiveList = createContext({
-  additiveList: [],
-  setAdditiveList: () => {},
+export const ContextShaurmaOrder = createContext({
+  shaurmaOrdered: {},
+  setShaurmaOrdered: () => {},
 })
 
 export function OrderPage() {
   const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
-  const [additiveList, setAdditiveList] = useState()
 
-  const additive = { additiveList, setAdditiveList }
+  const [shaurmaOrdered, setShaurmaOrdered] = useState()
+
+  const orderValue = { shaurmaOrdered, setShaurmaOrdered }
 
   useEffect(() => {
-    async function getAdditive() {
-      const additiveFromServer = await fetchAdditive()
-      setAdditiveList(additiveFromServer)
+    if (shaurmaList !== null) {
       debugger
+      function addShaurmanInArray() {
+        let orderInfo = []
+        let shaurmaObject
+        for (let i = 0; i < shaurmaList.length; i++) {
+          if (shaurmaList[i].inCart === true) {
+            shaurmaObject = {
+              // объект
+              shaurmaId: shaurmaList[i]._id,
+              additiveIdList: [],
+            }
+            orderInfo.push(shaurmaObject)
+          }
+        }
+        setShaurmaOrdered(orderInfo)
+      }
+
+      addShaurmanInArray()
     }
+  }, [shaurmaList])
 
-    getAdditive()
-  }, [])
-
-  console.log(additiveList)
   const pageOrder = true
   if (shaurmaList !== null) {
     return (
       <div>
         <Header pageOrder={pageOrder} />
-        <ContextAdditiveList.Provider value={additive}>
+        <ContextShaurmaOrder.Provider value={orderValue}>
           <OrderForm />
-        </ContextAdditiveList.Provider>
+        </ContextShaurmaOrder.Provider>
         <Footer />
       </div>
     )

@@ -1,13 +1,36 @@
 import { useContext } from 'react'
-import { ContextAdditiveList } from '../../../../../Order'
+import { ContextShaurmaOrder } from '../../../../../Order'
+import { ContextShaurmaId } from '../../../user-shaurma-list'
+import { ContextAdditiveList } from '../../modal-additive'
+import { fetchAdditive } from '../../../../../api/fetch-additive-array'
 
-export function DeleteButton(props.idOfAdditive) {
+export function DeleteButton({ additiveId, newShaurmaOrdered }) {
+  const { shaurmaOrdered, setShaurmaOrdered } = useContext(ContextShaurmaOrder)
+  const { setAdditiveList } = useContext(ContextAdditiveList)
+  const { idOfChosenShauma } = useContext(ContextShaurmaId)
+
+  const shaurmaId = idOfChosenShauma
+
+  async function deleteAdditive() {
+    const chosenShaurma = newShaurmaOrdered.find(
+      (shaurma) => shaurmaId === shaurma.shaurmaId,
+    )
+    chosenShaurma.additiveIdList = chosenShaurma.additiveIdList.filter(
+      (oneOfAdditiveId) => oneOfAdditiveId !== additiveId,
+    )
+    setShaurmaOrdered(newShaurmaOrdered)
+
+    const additiveFromServer = await fetchAdditive()
+    setAdditiveList(additiveFromServer)
+    console.log(shaurmaOrdered)
+  }
+
   return (
     <button
       type="button"
       className="add-or-delete-additive btn btn-primary"
-      id={props.idOfAdditive}
-      eventName="delete"
+      id={additiveId}
+      onClick={deleteAdditive}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -23,13 +46,30 @@ export function DeleteButton(props.idOfAdditive) {
   )
 }
 
-export function AddButton(props.idOfAdditive) {
+export function AddButton({ additiveId, newShaurmaOrdered }) {
+  const { shaurmaOrdered, setShaurmaOrdered } = useContext(ContextShaurmaOrder)
+  const { setAdditiveList } = useContext(ContextAdditiveList)
+  const { idOfChosenShauma } = useContext(ContextShaurmaId)
+
+  const shaurmaId = idOfChosenShauma
+
+  async function addAdditive() {
+    const chosenShaurma = newShaurmaOrdered.find(
+      (shaurma) => shaurmaId === shaurma.shaurmaId,
+    )
+    chosenShaurma.additiveIdList.push(additiveId)
+    setShaurmaOrdered(newShaurmaOrdered)
+    const additiveFromServer = await fetchAdditive()
+    setAdditiveList(additiveFromServer)
+    console.log(shaurmaOrdered)
+  }
+
   return (
     <button
       type="button"
       className="add-or-delete-additive btn btn-primary"
-      eventName="add"
-      id={props.idOfAdditive}
+      id={additiveId}
+      onClick={addAdditive}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -46,23 +86,43 @@ export function AddButton(props.idOfAdditive) {
   )
 }
 
-export function AdditiveButton( props) {
-  const { shaurmaOrdered, setShaurmaOrdered } = useContext(ContextAdditiveList)
+export function AdditiveButton(props) {
+  const { shaurmaOrdered, setShaurmaOrdered } = useContext(ContextShaurmaOrder)
+  const { idOfChosenShauma } = useContext(ContextShaurmaId)
+
   let buttonShaurma
-  const additiveId = props.idOfAdditive.split('_')
-  const chosenShaurma = shaurmaOrdered.find(
-    (shaurma) => props.shaurmaId === shaurma.props.shaurmaId,
-  )
 
-  const additiveOfShaurma = chosenShaurma.additiveIdList.find(
-    (additive) => additiveId[1] === additive,
-  )
+  if (shaurmaOrdered !== undefined && idOfChosenShauma !== undefined) {
+    let shaurmaId = idOfChosenShauma
+    let additiveId = props.idOfAdditive
 
-  if (additiveOfShaurma) {
-    buttonShaurma = DeleteButton(props.idOfAdditive)
-  } else {
-    buttonShaurma = AddButton(props.idOfAdditive)
+    debugger
+
+    const chosenShaurma = shaurmaOrdered.find(
+      (shaurma) => shaurmaId === shaurma.shaurmaId,
+    )
+
+    const additiveOfShaurma = chosenShaurma.additiveIdList.find(
+      (additive) => additiveId === additive,
+    )
+
+    if (additiveOfShaurma) {
+      buttonShaurma = (
+        <DeleteButton
+          additiveId={additiveId}
+          newShaurmaOrdered={shaurmaOrdered}
+        />
+      )
+    } else {
+      buttonShaurma = (
+        <AddButton
+          additiveId={additiveId}
+          shaurmaId={shaurmaId}
+          newShaurmaOrdered={shaurmaOrdered}
+        />
+      )
+    }
+    return <div>{buttonShaurma}</div>
   }
-
-  return buttonShaurma
+  return <div>net</div>
 }

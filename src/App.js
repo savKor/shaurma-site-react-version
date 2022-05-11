@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { fetchAdditive } from './api/fetch-additive-array'
 import { fetchShaurma } from './api/fetch-array'
 import { Error } from './Error'
 import { LoginPage } from './Login'
@@ -17,14 +18,10 @@ export const ContextShaurmaList = createContext({
   shaurmaList: {},
   setShaurmaList: () => {},
 })
-
 function App() {
   const [shaurmaList, setShaurmaList] = useState(null)
-
   const [storageUser, setStorage] = useState(storage.user)
-
   const storageOfUserInfo = { storageUser, setStorage }
-
   const shuarma = { shaurmaList, setShaurmaList }
 
   useEffect(() => {

@@ -41,6 +41,7 @@ export function ModalCard() {
   async function closeModal() {
     setIsOpen(false)
     const shaurmaFromServer = await fetchShaurma()
+    debugger
     setShaurmaList(shaurmaFromServer)
   }
 

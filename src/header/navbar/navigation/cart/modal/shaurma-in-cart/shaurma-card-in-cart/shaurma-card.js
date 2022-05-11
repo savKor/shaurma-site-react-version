@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import { deleteShaurmaInUserCart } from '../../../../../../../api/fetch-cart'
 import { ContextShaurmaList } from '../../../../../../../App'
-import { ContextStatusInCart } from '../shaurma-list-in-cart'
+import { fetchShaurma } from '../../../../../../../api/fetch-array'
 
 export function ShaurmaCardInCart({
   idOfCard,
@@ -9,14 +9,15 @@ export function ShaurmaCardInCart({
   costOfShaurma,
   idOfShaurma,
 }) {
-  const { statusInCart, setStatusInCart } = useContext(ContextStatusInCart)
+  const { setShaurmaList } = useContext(ContextShaurmaList)
 
   const splitId = idOfShaurma.split('_')
   const shaurmaId = splitId[1]
 
-  async function setStatus() {
+  async function deleteFromCart() {
     await deleteShaurmaInUserCart({ shaurmaId })
-    setStatusInCart(false)
+    const shaurmaFromServer = await fetchShaurma()
+    setShaurmaList(shaurmaFromServer)
   }
 
   return (
@@ -41,7 +42,7 @@ export function ShaurmaCardInCart({
               type="button"
               className="delete-from-cart btn btn-primary"
               id={idOfShaurma}
-              onClick={setStatus}
+              onClick={deleteFromCart}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -78,7 +78,6 @@ export function Button(props) {
   const { storageUser } = useContext(ContextUser)
 
   if (props.statusShaurmaInCart === false || storageUser.loggedIn === false) {
-    debugger
     return (
       <EnableButton
         idOfShaurma={props.idOfShaurma}
@@ -87,7 +86,6 @@ export function Button(props) {
     )
   }
 
-  debugger
   return (
     <DisabledButton
       idOfShaurma={props.idOfShaurma}

@@ -1,9 +1,17 @@
-import { useContext } from 'react'
+import { createContext, useContext, useState } from 'react'
+import { deleteShaurmaInUserCart } from '../../api/fetch-cart'
+import { fetchShaurma } from '../../api/fetch-array'
 import { ContextShaurmaList } from '../../App'
 import { ModalAdditive } from './modal/modal-additive'
 
+export const ContextShaurmaId = createContext({
+  idOfChosenShauma: null,
+  setShaurmaList: () => {},
+})
+
 export function ListOfShaurmaCards() {
   const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
+  const [idOfChosenShauma, setIdOfChosenShauma] = useState()
 
   const listOfCards = []
   for (let i = 0; i < shaurmaList.length; i++) {
@@ -13,6 +21,20 @@ export function ListOfShaurmaCards() {
       const idOfButtonDeleteShaurma = `shaurma-list_${shaurmaList[i]._id}`
       const idOfCard = `shaurma-card_${shaurmaList[i]._id}`
       const idOfModalButton = `modal_${shaurmaList[i]._id}`
+      const shaurmaId = shaurmaList[i]._id
+
+      async function changeId() {
+        setIdOfChosenShauma(shaurmaId)
+      }
+
+      async function deleteFromCart() {
+        await deleteShaurmaInUserCart({ shaurmaId })
+        const shaurmaFromServer = await fetchShaurma()
+        setShaurmaList(shaurmaFromServer)
+      }
+
+      const valueOfChosenShauma = { idOfChosenShauma, setIdOfChosenShauma }
+
       const cardsOfShaurma = (
         <div id={idOfCard} className="user-order card mb-3">
           <div className="user-shaurma row g-0">
@@ -35,11 +57,14 @@ export function ListOfShaurmaCards() {
                   data-bs-toggle="modal"
                   data-bs-target="#additiveModal"
                   id={idOfModalButton}
+                  onClick={changeId}
                 >
                   Добавить добавки
                 </button>
                 <div id="additive-modal">
-                  <ModalAdditive idOfCard={idOfCard} />
+                  <ContextShaurmaId.Provider value={valueOfChosenShauma}>
+                    <ModalAdditive />
+                  </ContextShaurmaId.Provider>
                 </div>
                 <h5 id="name-of-shaurma" className="card-title">
                   {nameOfShaurma}
@@ -51,6 +76,7 @@ export function ListOfShaurmaCards() {
                   type="button"
                   className="delete-from-cart btn btn-primary"
                   id={idOfButtonDeleteShaurma}
+                  onClick={deleteFromCart}
                 >
                   Удалить
                 </button>

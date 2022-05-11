@@ -5,18 +5,13 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import { ListOfShaurmaCards } from './shaurma/user-shaurma-list'
 import { ContextShaurmaList } from '../App'
-
-export const ContextShaurmaOrder = createContext({
-  shaurmaOrdered: {},
-  setShaurmaOrdered: () => {},
-})
+import { ContextShaurmaOrder } from '../Order'
+import { addOrderToDatabase } from '../api/fetch-order'
 
 export function OrderForm() {
   const [coordinates, setCoonrdinates] = useState()
   const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
-  const [shaurmaOrdered, setShaurmaOrdered] = useState(addShaurmanInArray)
-
-  const value = { shaurmaOrdered, setShaurmaOrdered }
+  const { shaurmaOrdered, setShaurmaOrdered } = useContext(ContextShaurmaOrder)
 
   const mapContainer = useRef(null)
   mapboxgl.accessToken =
@@ -25,22 +20,6 @@ export function OrderForm() {
   const [lng, setLng] = useState(-70.9)
   const [lat, setLat] = useState(42.35)
   const [zoom, setZoom] = useState(9)
-
-  function addShaurmanInArray() {
-    let orderInfo = []
-    let shaurmaObject
-    for (let i = 0; i < shaurmaList.length; i++) {
-      if (shaurmaList[i].inCart === true) {
-        shaurmaObject = {
-          // объект
-          shaurmaId: shaurmaList[i]._id,
-          additiveIdList: [],
-        }
-        orderInfo.push(shaurmaObject)
-      }
-    }
-    return orderInfo
-  }
 
   useEffect(() => {
     if (map.current) return // initialize map only once
@@ -64,21 +43,31 @@ export function OrderForm() {
     map.current.addControl(geocoder)
   })
 
+  async function handleOrderButton() {
+    if (coordinates !== undefined) {
+      addOrderToDatabase({ shaurmaOrdered, coordinates })
+    } else {
+      alert('Укажите координаты')
+    }
+  }
   useEffect(() => console.log(coordinates))
   return (
     <main id="main-form">
       <div className="container">
         <ul id="card-list-of-order" className="g-3">
-          <ContextShaurmaOrder.Provider value={value}>
-            <ListOfShaurmaCards />
-          </ContextShaurmaOrder.Provider>
+          <ListOfShaurmaCards />
         </ul>
       </div>
       <div id="map-content">
         <div ref={mapContainer} id="map" className="map-container" />
       </div>
       <div className="d-grid gap-2">
-        <button id="order" className="btn btn-primary" type="button">
+        <button
+          id="order"
+          className="btn btn-primary"
+          type="button"
+          onClick={handleOrderButton}
+        >
           Оформить заказ
         </button>
       </div>

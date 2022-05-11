@@ -16,7 +16,6 @@ export async function putShaurmaInUserCart(data) {
 }
 
 export async function deleteShaurmaInUserCart(data) {
-  debugger
   const rawResponse = await fetch(`${API_URL}user/cart-list/deleted`, {
     method: 'POST',
     headers: getHeader(),
