@@ -44,10 +44,11 @@ export function OrderForm() {
   })
 
   async function handleOrderButton() {
-    if (coordinates !== undefined) {
+    if (coordinates !== undefined && shaurmaOrdered.length !== 0) {
+      debugger
       addOrderToDatabase({ shaurmaOrdered, coordinates })
     } else {
-      alert('Укажите координаты')
+      alert('Укажите полностью данные')
     }
   }
   useEffect(() => console.log(coordinates))
