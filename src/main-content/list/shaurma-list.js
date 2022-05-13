@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { ContextShaurmaList } from '../../App'
-import { Button } from './button/button'
+import { ContextShaurmaList } from '../../contex'
+import { ButtonAddOrDelete } from './button'
 
 export function ListOfCards() {
   const { shaurmaList } = useContext(ContextShaurmaList)
@@ -14,7 +14,6 @@ export function ListOfCards() {
     const idOfCardShaurma = `card_${shaurmaList[i]._id}`
     const statusShaurmaInCart = shaurmaList[i].inCart
 
-    debugger
     const cardsOfShaurma = (
       <div
         className="shaurma-cards"
@@ -35,7 +34,7 @@ export function ListOfCards() {
           <div className="row row-cols-1 row-cols-sm-2">
             <h6 className="card-text">{costOfShaurma} rub</h6>
             <div>
-              <Button
+              <ButtonAddOrDelete
                 statusShaurmaInCart={statusShaurmaInCart}
                 idOfShaurma={idOfShaurmaButton}
                 shaurmaList={shaurmaList}
@@ -45,6 +44,7 @@ export function ListOfCards() {
         </div>
       </div>
     )
+
     listOfCards[i] = cardsOfShaurma
   }
 

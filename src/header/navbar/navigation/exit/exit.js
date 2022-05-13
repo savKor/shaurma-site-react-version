@@ -1,20 +1,19 @@
 import { useContext } from 'react'
-import { fetchShaurma } from '../../../../api/fetch-array'
-import { deleteToken } from '../../../../api/token'
-import { ContextShaurmaList, ContextUser } from '../../../../App'
+import { fetchShaurma } from '../../../../action/fetch-array'
+import { deleteToken } from '../../../../action/token'
+import { ContextShaurmaList, ContextUser } from '../../../../contex'
 import { createUserData } from '../../../../storage/storage'
 
 export function ExitButton() {
   const { setShaurmaList } = useContext(ContextShaurmaList)
-  const { storageUser, setStorage } = useContext(ContextUser)
+  //const [storageUser, setStorage] = useState(storage.user)
+  const { setStorage } = useContext(ContextUser)
 
   async function onExitClick() {
     deleteToken()
     setStorage(createUserData(localStorage.getItem('token')))
     const shaurmaFromServer = await fetchShaurma()
     setShaurmaList(shaurmaFromServer)
-    debugger
-    console.log(storageUser)
   }
 
   return (

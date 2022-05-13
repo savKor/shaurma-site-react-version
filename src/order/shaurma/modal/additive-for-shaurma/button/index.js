@@ -1,11 +1,13 @@
 import { useContext } from 'react'
-import { ContextShaurmaOrder } from '../../../../../Order'
-import { ContextShaurmaId } from '../../../user-shaurma-list'
-import { ContextAdditiveList } from '../../modal-additive'
-import { fetchAdditive } from '../../../../../api/fetch-additive-array'
+import { fetchAdditive } from '../../../../../action/fetch-additive-array'
+import {
+  ContextAdditiveList,
+  ContextShaurmaId,
+  ContextShaurmaOrder,
+} from '../../../../../contex'
 
 export function DeleteButton({ additiveId, newShaurmaOrdered }) {
-  const { shaurmaOrdered, setShaurmaOrdered } = useContext(ContextShaurmaOrder)
+  const { setShaurmaOrdered } = useContext(ContextShaurmaOrder)
   const { setAdditiveList } = useContext(ContextAdditiveList)
   const { idOfChosenShauma } = useContext(ContextShaurmaId)
 
@@ -19,16 +21,14 @@ export function DeleteButton({ additiveId, newShaurmaOrdered }) {
       (oneOfAdditiveId) => oneOfAdditiveId !== additiveId,
     )
     setShaurmaOrdered(newShaurmaOrdered)
-
     const additiveFromServer = await fetchAdditive()
     setAdditiveList(additiveFromServer)
-    console.log(shaurmaOrdered)
   }
 
   return (
     <button
       type="button"
-      className="add-or-delete-additive btn btn-primary"
+      className="delete-from-the-cart btn btn-primary"
       id={additiveId}
       onClick={deleteAdditive}
     >
@@ -47,7 +47,7 @@ export function DeleteButton({ additiveId, newShaurmaOrdered }) {
 }
 
 export function AddButton({ additiveId, newShaurmaOrdered }) {
-  const { shaurmaOrdered, setShaurmaOrdered } = useContext(ContextShaurmaOrder)
+  const { setShaurmaOrdered } = useContext(ContextShaurmaOrder)
   const { setAdditiveList } = useContext(ContextAdditiveList)
   const { idOfChosenShauma } = useContext(ContextShaurmaId)
 
@@ -61,7 +61,6 @@ export function AddButton({ additiveId, newShaurmaOrdered }) {
     setShaurmaOrdered(newShaurmaOrdered)
     const additiveFromServer = await fetchAdditive()
     setAdditiveList(additiveFromServer)
-    console.log(shaurmaOrdered)
   }
 
   return (
@@ -86,17 +85,16 @@ export function AddButton({ additiveId, newShaurmaOrdered }) {
   )
 }
 
-export function AdditiveButton(props) {
+export function Button(props) {
   const { shaurmaOrdered } = useContext(ContextShaurmaOrder)
   const { idOfChosenShauma } = useContext(ContextShaurmaId)
 
-  let buttonShaurma
+  let buttonAdditive
 
-  if (shaurmaOrdered !== undefined && idOfChosenShauma !== undefined) {
-    let shaurmaId = idOfChosenShauma
-    let additiveId = props.idOfAdditive
-
-    debugger
+  function getButton() {
+    let button
+    const shaurmaId = idOfChosenShauma
+    const additiveId = props.idOfAdditive
 
     const chosenShaurma = shaurmaOrdered.find(
       (shaurma) => shaurmaId === shaurma.shaurmaId,
@@ -107,14 +105,14 @@ export function AdditiveButton(props) {
     )
 
     if (additiveOfShaurma) {
-      buttonShaurma = (
+      button = (
         <DeleteButton
           additiveId={additiveId}
           newShaurmaOrdered={shaurmaOrdered}
         />
       )
     } else {
-      buttonShaurma = (
+      button = (
         <AddButton
           additiveId={additiveId}
           shaurmaId={shaurmaId}
@@ -122,7 +120,12 @@ export function AdditiveButton(props) {
         />
       )
     }
-    return <div>{buttonShaurma}</div>
+    return button
   }
-  return <div>net</div>
+
+  if (shaurmaOrdered !== undefined && idOfChosenShauma !== undefined) {
+    buttonAdditive = getButton()
+    return <div>{buttonAdditive}</div>
+  }
+  return <div>Не загрузились данные</div>
 }

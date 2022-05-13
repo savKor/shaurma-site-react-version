@@ -1,19 +1,28 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ContextShaurmaList, ContextUser } from '../../../../../App'
 import Modal from 'react-modal'
 import { ListOfCards } from './shaurma-in-cart/shaurma-list-in-cart'
-import { ContextModalCart } from '../cart'
-import { fetchShaurma } from '../../../../../api/fetch-array'
+import { fetchShaurma } from '../../../../../action/fetch-array'
+import { ContextShaurmaList, ContextUser } from '../../../../../contex'
+import { storage } from '../../../../../contex/storage'
 
 export function ModalCard() {
   const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
   const { storageUser } = useContext(ContextUser)
-  const { modalIsOpen, setIsOpen } = useContext(ContextModalCart)
+  const [modalIsOpen, setModalIsOpen] = useState()
+
+  async function handleChangeContext(data) {
+    console.log('Это новые данные - ' + data)
+    setModalIsOpen(data)
+  }
+
+  useEffect(() => {
+    storage.subscribe('modalStatus', handleChangeContext)
+    setModalIsOpen(false)
+  }, [])
 
   function getListOfShaurmaInCart(shaurmaList) {
     const costOfEveryShaurma = []
-
     for (let i = 0; i < shaurmaList.length; i++) {
       if (shaurmaList[i].inCart === true) {
         const costOfShaurma = shaurmaList[i].cost
@@ -22,7 +31,6 @@ export function ModalCard() {
         costOfEveryShaurma[i] = 0
       }
     }
-
     return costOfEveryShaurma
   }
 
@@ -38,10 +46,15 @@ export function ModalCard() {
   }
 
   async function closeModal() {
-    setIsOpen(false)
+    storage.setValue('modalStatus', false)
+  }
+
+  async function openNewPage() {
+    storage.setValue('modalStatus', false)
     const shaurmaFromServer = await fetchShaurma()
-    debugger
     setShaurmaList(shaurmaFromServer)
+    storage.unsubscribe('modalStatus')
+    storage.unsubscribe('modalStatus')
   }
 
   function alertMessage() {
@@ -52,7 +65,7 @@ export function ModalCard() {
     let cartInfo
     if (storageUser.loggedIn === true) {
       cartInfo = (
-        <Link className="btn btn-primary" to="/order" onClick={closeModal}>
+        <Link className="btn btn-primary" to="/order" onClick={openNewPage}>
           Оформить заказ
         </Link>
       )
@@ -85,9 +98,9 @@ export function ModalCard() {
           <button
             type="button"
             className="btn-close"
-            data-bs-dismiss="modal"
             aria-label="Close"
             onClick={closeModal}
+            data-dismiss="modal"
           ></button>
         </div>
         <div id="cart-with-shaurma" className="modal-body">

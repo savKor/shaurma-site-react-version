@@ -1,33 +1,30 @@
-import { createContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import { fetchShaurma } from './api/fetch-array'
+import { fetchShaurma } from './action/fetch-array'
+import { ContextShaurmaList, ContextUser } from './contex'
+import { storage } from './contex/storage'
 import { Error } from './Error'
 import { LoginPage } from './Login'
 import { MainPage } from './Main'
 import { OrderPage } from './Order.js'
 import { RegistrationPage } from './Registration.js'
-import { storage } from './storage/storage'
-
-export const ContextUser = createContext({
-  storageUser: {},
-  setStorage: () => {},
-})
-
-export const ContextShaurmaList = createContext({
-  shaurmaList: {},
-  setShaurmaList: () => {},
-})
+import { storageUserFullInfo } from './storage/storage'
 
 function App() {
   const [shaurmaList, setShaurmaList] = useState(null)
-  const [storageUser, setStorage] = useState(storage.user)
-  const storageOfUserInfo = { storageUser, setStorage }
-  const shuarma = { shaurmaList, setShaurmaList }
+  const [storageUser, setStorage] = useState(storageUserFullInfo.user)
+
+  const valueOfUserForContext = { storageUser, setStorage }
+  const contextValueOfShaurmaList = { shaurmaList, setShaurmaList }
 
   async function getShaurma() {
     const shaurmaFromServer = await fetchShaurma()
     setShaurmaList(shaurmaFromServer)
   }
+
+  useEffect(() => {
+    storage.setValue('storageUser', storageUserFullInfo.user)
+  }, [])
 
   useEffect(() => {
     getShaurma()
@@ -37,8 +34,8 @@ function App() {
 
   return (
     <Router>
-      <ContextUser.Provider value={storageOfUserInfo}>
-        <ContextShaurmaList.Provider value={shuarma}>
+      <ContextUser.Provider value={valueOfUserForContext}>
+        <ContextShaurmaList.Provider value={contextValueOfShaurmaList}>
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/registration" element={<RegistrationPage />} />

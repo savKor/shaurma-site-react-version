@@ -1,7 +1,7 @@
 import { useContext } from 'react'
-import { deleteShaurmaInUserCart } from '../../../../../../../api/fetch-cart'
-import { ContextShaurmaList } from '../../../../../../../App'
-import { fetchShaurma } from '../../../../../../../api/fetch-array'
+import { deleteShaurmaInUserCart } from '../../../../../../../action/fetch-cart'
+import { fetchShaurma } from '../../../../../../../action/fetch-array'
+import { ContextShaurmaList } from '../../../../../../../contex'
 
 export function ShaurmaCardInCart({
   idOfCard,

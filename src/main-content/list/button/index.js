@@ -1,28 +1,29 @@
-import { useContext } from 'react'
-import { fetchShaurma } from '../../../api/fetch-array'
+import { useContext, useEffect, useState } from 'react'
+import { fetchShaurma } from '../../../action/fetch-array'
 import {
   deleteShaurmaInUserCart,
   putShaurmaInUserCart,
-} from '../../../api/fetch-cart'
-import { ContextShaurmaList, ContextUser } from '../../../App'
+} from '../../../action/fetch-cart'
+import { ContextShaurmaList, ContextUser } from '../../../contex'
+import { storage } from '../../../contex/storage'
+import { storageUserFullInfo } from '../../../storage/storage'
 
 export function DisabledButton(props) {
   const { setShaurmaList } = useContext(ContextShaurmaList)
-  const splitId = props.idOfShaurma.split('_')
-  const shaurmaId = splitId[1]
+  const shaurmaId = props.shaurmaId
 
   async function deleteFromCart() {
     if (props.loggedIn === true) {
       await deleteShaurmaInUserCart({ shaurmaId })
-      const shaurmaFromServer = await fetchShaurma()
-      setShaurmaList(shaurmaFromServer)
+      const shaurmaListFromServer = await fetchShaurma()
+      setShaurmaList(shaurmaListFromServer)
     }
   }
 
   return (
     <button
       type="button"
-      className="delete-from-main btn btn-primary"
+      className="add-in-the-cart btn btn-primary"
       id={props.idOfShaurma}
       onClick={deleteFromCart}
     >
@@ -42,14 +43,13 @@ export function DisabledButton(props) {
 
 export function EnableButton(props) {
   const { setShaurmaList } = useContext(ContextShaurmaList)
-  const splitId = props.idOfShaurma.split('_')
-  const shaurmaId = splitId[1]
+  const shaurmaId = props.shaurmaId
 
   async function addInCart() {
     if (props.loggedIn === true) {
       await putShaurmaInUserCart({ shaurmaId })
-      const shaurmaFromServer = await fetchShaurma()
-      setShaurmaList(shaurmaFromServer)
+      const shaurmaListFromServer = await fetchShaurma()
+      setShaurmaList(shaurmaListFromServer)
     }
   }
 
@@ -74,22 +74,28 @@ export function EnableButton(props) {
   )
 }
 
-export function Button(props) {
+export function ButtonAddOrDelete(props) {
+  const [storageUserInfo, setStorageUser] = useState()
   const { storageUser } = useContext(ContextUser)
+  const splitId = props.idOfShaurma.split('_')
+  const shaurmaId = splitId[1]
+
+  async function handleChangeContext(data) {
+    console.log('Это новые данные - ' + data)
+    setStorageUser(data)
+  }
+
+  useEffect(() => {
+    storage.subscribe('storageUser', handleChangeContext)
+  }, [])
 
   if (props.statusShaurmaInCart === false || storageUser.loggedIn === false) {
     return (
-      <EnableButton
-        idOfShaurma={props.idOfShaurma}
-        loggedIn={storageUser.loggedIn}
-      />
+      <EnableButton shaurmaId={shaurmaId} loggedIn={storageUser.loggedIn} />
     )
   }
 
   return (
-    <DisabledButton
-      idOfShaurma={props.idOfShaurma}
-      loggedIn={storageUser.loggedIn}
-    />
+    <DisabledButton shaurmaId={shaurmaId} loggedIn={storageUser.loggedIn} />
   )
 }

@@ -1,8 +1,8 @@
 import { useContext } from 'react'
-import { ContextShaurmaList } from './App.js'
 import { Footer } from './footer/footer.js'
 import { Header } from './header/index.js'
 import { MainConten } from './main-content/index.js'
+import { ContextShaurmaList } from './contex'
 
 export function MainPage() {
   const { shaurmaList } = useContext(ContextShaurmaList)

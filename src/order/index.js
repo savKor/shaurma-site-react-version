@@ -4,8 +4,8 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import { ListOfShaurmaCards } from './shaurma/user-shaurma-list'
-import { ContextShaurmaOrder } from '../Order'
-import { addOrderToDatabase } from '../api/fetch-order'
+import { addOrderToDatabase } from '../action/fetch-order'
+import { ContextShaurmaOrder } from '../contex'
 
 export function OrderForm() {
   const [coordinates, setCoonrdinates] = useState()
@@ -15,18 +15,21 @@ export function OrderForm() {
   mapboxgl.accessToken =
     'pk.eyJ1IjoicmFmY3J1IiwiYSI6ImNrendxaGwzMzAyYTMydXJ2aHB3dzJ4OWoifQ.wj9FjHmT9tlzBVeZXdx9Sw'
   const map = useRef(null)
+
   const [lng] = useState(-70.9)
   const [lat] = useState(42.35)
   const [zoom] = useState(9)
 
   useEffect(() => {
     if (map.current) return // initialize map only once
+
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [lng, lat],
       zoom: zoom,
     })
+
     let geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
       placeholder: 'SEARCH GEOGRAPHY ON MAP',
@@ -39,7 +42,23 @@ export function OrderForm() {
     })
 
     map.current.addControl(geocoder)
+
+    let geolocate = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      // When active the map will receive updates to the device's location as it changes.
+      trackUserLocation: true,
+      // Draw an arrow next to the location dot to indicate which direction the device is heading.
+      showUserHeading: true,
+    }).on('geolocate', (e) => {
+      setCoonrdinates(e.coords)
+    })
+
+    map.current.addControl(geolocate)
   })
+
+  useEffect(() => console.log(coordinates))
 
   async function handleOrderButton() {
     if (coordinates !== undefined && shaurmaOrdered.length !== 0) {
@@ -49,7 +68,7 @@ export function OrderForm() {
       alert('Укажите полностью данные')
     }
   }
-  useEffect(() => console.log(coordinates))
+
   return (
     <main id="main-form">
       <div className="container">

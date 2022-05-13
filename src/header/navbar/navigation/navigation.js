@@ -3,10 +3,11 @@ import { Nick } from './nickname/nickname'
 import { SignUpButton } from './sing-up/sign-up'
 import { ExitButton } from './exit/exit'
 import { useContext } from 'react'
-import { ContextUser } from '../../../App'
 import { BackButton } from './back/back-button'
+import { ContextUser } from '../../../contex'
 
 export function Navigation(props) {
+  // const [storageUser, setStorage] = useState(storage.user)
   const { storageUser } = useContext(ContextUser)
 
   if (props.pageOrder === false) {

@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { ContextShaurmaList } from '../../../../../../App'
+import { ContextShaurmaList } from '../../../../../../contex'
 import { ShaurmaCardInCart } from './shaurma-card-in-cart/shaurma-card'
 
 export function ListOfCards() {

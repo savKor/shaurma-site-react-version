@@ -2,29 +2,29 @@ export function Navigator() {
   return (
     <ul className="nav border-bottom">
       <li className="nav-item">
-        <a href="#" className="nav-link text-muted">
+        <button href="#" className="nav-link text-muted">
           Home
-        </a>
+        </button>
       </li>
       <li className="nav-item">
-        <a href="#" className="nav-link text-muted">
+        <button href="#" className="nav-link text-muted">
           Features
-        </a>
+        </button>
       </li>
       <li className="nav-item">
-        <a href="#" className="nav-link text-muted">
+        <button href="#" className="nav-link text-muted">
           Pricing
-        </a>
+        </button>
       </li>
       <li className="nav-item">
-        <a href="#" className="nav-link text-muted">
+        <button href="#" className="nav-link text-muted">
           FAQs
-        </a>
+        </button>
       </li>
       <li className="nav-item">
-        <a href="#" className="nav-link text-muted">
+        <button href="#" className="nav-link text-muted">
           About
-        </a>
+        </button>
       </li>
     </ul>
   )

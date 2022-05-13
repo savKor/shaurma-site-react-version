@@ -1,13 +1,11 @@
 import { useContext } from 'react'
-import { ContextAdditiveList } from '../modal-additive'
-import { AdditiveButton } from './button/indexButton'
+import { ContextAdditiveList } from '../../../../contex'
+import { Button } from './button'
 
-export function ListOfAdditiveCards(props) {
+export function ListOfAdditiveCards() {
   const { additiveList } = useContext(ContextAdditiveList)
   const listOfCards = []
 
-  if (additiveList !== undefined) {
-  }
   for (let i = 0; i < additiveList.length; i++) {
     const nameOfAdditive = additiveList[i].name
     const costOfAdditive = additiveList[i].cost
@@ -28,7 +26,7 @@ export function ListOfAdditiveCards(props) {
             <div className="card-body">
               <h5 className="card-title">{nameOfAdditive}</h5>
               <p className="card-text">Цена: {costOfAdditive}</p>
-              <AdditiveButton idOfAdditive={additiveList[i]._id} />
+              <Button idOfAdditive={additiveList[i]._id} />
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { registerUser } from '../../api/fetch-registration'
+import { registerUser } from '../../action/fetch-registration'
 
 export function RegistrarionForm() {
   const [username, setUsername] = useState('')

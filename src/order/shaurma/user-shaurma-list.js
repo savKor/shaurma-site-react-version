@@ -1,13 +1,8 @@
-import { createContext, useContext, useState } from 'react'
-import { deleteShaurmaInUserCart } from '../../api/fetch-cart'
-import { fetchShaurma } from '../../api/fetch-array'
-import { ContextShaurmaList } from '../../App'
+import { useContext, useState } from 'react'
+import { deleteShaurmaInUserCart } from '../../action/fetch-cart'
+import { fetchShaurma } from '../../action/fetch-array'
 import { ModalAdditive } from './modal/modal-additive'
-
-export const ContextShaurmaId = createContext({
-  idOfChosenShauma: null,
-  setShaurmaList: () => {},
-})
+import { ContextShaurmaId, ContextShaurmaList } from '../../contex'
 
 export function ListOfShaurmaCards() {
   const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
@@ -31,6 +26,7 @@ export function ListOfShaurmaCards() {
         await deleteShaurmaInUserCart({ shaurmaId })
         const shaurmaFromServer = await fetchShaurma()
         setShaurmaList(shaurmaFromServer)
+        setIdOfChosenShauma(undefined)
       }
 
       const contextValueOfChosenIdOfShauma = {

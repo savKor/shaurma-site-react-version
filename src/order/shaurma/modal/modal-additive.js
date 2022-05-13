@@ -1,13 +1,8 @@
-import { useState, createContext, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 
-import { fetchAdditive } from '../../../api/fetch-additive-array'
+import { fetchAdditive } from '../../../action/fetch-additive-array'
 import { ListOfAdditiveCards } from './additive-for-shaurma/additive'
-import { ContextShaurmaId } from '../user-shaurma-list'
-
-export const ContextAdditiveList = createContext({
-  additiveList: [],
-  setAdditiveList: () => {},
-})
+import { ContextAdditiveList, ContextShaurmaId } from '../../../contex'
 
 export function ModalAdditive(props) {
   const { setIdOfChosenShauma } = useContext(ContextShaurmaId)

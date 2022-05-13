@@ -1,12 +1,14 @@
+import { Link } from 'react-router-dom'
+
 export function BackButton() {
   return (
-    <a
+    <Link
       id="back-button"
       type="button"
       className="btn btn-sm btn-outline-secondary"
-      href="./home.html"
+      to="/"
     >
       Back
-    </a>
+    </Link>
   )
 }

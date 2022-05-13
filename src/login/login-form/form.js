@@ -1,14 +1,15 @@
 import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { fetchShaurma } from '../../api/fetch-array'
-import { loginUser } from '../../api/fetch-login'
-import { setToken } from '../../api/token'
-import { ContextShaurmaList, ContextUser } from '../../App'
+import { fetchShaurma } from '../../action/fetch-array'
+import { loginUser } from '../../action/fetch-login'
+import { setToken } from '../../action/token'
+import { ContextShaurmaList, ContextUser } from '../../contex'
 import { createUserData } from '../../storage/storage'
 
 export function LoginForm() {
-  const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
-  const { storageUser, setStorage } = useContext(ContextUser)
+  const { setShaurmaList } = useContext(ContextShaurmaList)
+  // const [storageUser, setStorage] = useState(storage.user)
+  const { setStorage } = useContext(ContextUser)
 
   const [loginFormInfo, setLoginFormInfo] = useState({
     username: '',
@@ -16,6 +17,7 @@ export function LoginForm() {
   })
 
   const navigate = useNavigate()
+
   function changeUsername(e) {
     setLoginFormInfo({
       username: e.target.value,
@@ -35,7 +37,6 @@ export function LoginForm() {
       alert(result.errors[0].message)
     } else {
       const dataKey = result.data
-
       setToken(dataKey.token)
       const shaurmaFromServer = await fetchShaurma()
       setStorage(createUserData(localStorage.getItem('token')))
@@ -46,7 +47,6 @@ export function LoginForm() {
 
   async function handleLoginClick() {
     const result = await loginUser(loginFormInfo)
-
     handleLoginResult(result)
   }
 
