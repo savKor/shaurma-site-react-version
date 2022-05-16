@@ -3,13 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { fetchShaurma } from '../../action/fetch-array'
 import { loginUser } from '../../action/fetch-login'
 import { setToken } from '../../action/token'
-import { ContextShaurmaList, ContextUser } from '../../contex'
-import { createUserData } from '../../storage/storage'
+import { ContextShaurmaList } from '../../contex'
+import { storage } from '../../contex/storage'
+import { createUserData } from '../../user-information'
 
 export function LoginForm() {
   const { setShaurmaList } = useContext(ContextShaurmaList)
-  // const [storageUser, setStorage] = useState(storage.user)
-  const { setStorage } = useContext(ContextUser)
 
   const [loginFormInfo, setLoginFormInfo] = useState({
     username: '',
@@ -38,9 +37,13 @@ export function LoginForm() {
     } else {
       const dataKey = result.data
       setToken(dataKey.token)
-      const shaurmaFromServer = await fetchShaurma()
-      setStorage(createUserData(localStorage.getItem('token')))
-      setShaurmaList(shaurmaFromServer)
+      const shaurmaListFromServer = await fetchShaurma()
+      storage.setValue(
+        'storageUser',
+        createUserData(localStorage.getItem('token')),
+      )
+      setShaurmaList(shaurmaListFromServer)
+      storage.setValue('shaurmaList', shaurmaListFromServer)
       navigate('/')
     }
   }

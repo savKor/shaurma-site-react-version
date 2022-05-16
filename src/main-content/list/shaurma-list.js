@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { ContextShaurmaList } from '../../contex'
 import { ButtonAddOrDelete } from './button'
 
-export function ListOfCards() {
+export function ListOfCards(props) {
   const { shaurmaList } = useContext(ContextShaurmaList)
 
   const listOfCards = []

@@ -1,24 +1,56 @@
-import { storageUserFullInfo } from '../storage/storage'
+import { fetchAdditive } from '../action/fetch-additive-array'
+import { fetchShaurma } from '../action/fetch-array'
+import { userFullInfo } from '../user-information'
 
-let context = {
-  modalStatus: false,
-  storageUser: undefined,
+async function getShaurma() {
+  const shaurmaListFromServer = await fetchShaurma()
+  storage.setValue('shaurmaList', shaurmaListFromServer)
+}
+
+async function getAdditive() {
+  const additiveFromServer = await fetchAdditive()
+  debugger
+  storage.setValue('additiveList', additiveFromServer)
+}
+
+async function addShaurmanThatInCart() {
+  const shaurmaListFromServer = await fetchShaurma()
+  let orderInfo = []
+  let shaurmaObject
+  debugger
+  for (let i = 0; i < shaurmaListFromServer.length; i++) {
+    if (shaurmaListFromServer[i].inCart === true) {
+      shaurmaObject = {
+        // объект
+        shaurmaId: shaurmaListFromServer[i]._id,
+        additiveIdList: [],
+      }
+      orderInfo.push(shaurmaObject)
+    }
+  }
+  storage.setValue('shaurmaOrdered', orderInfo)
 }
 
 export class Storage {
-  constructor(data) {
-    this.data = data
+  constructor() {
+    this.data = {
+      modalStatus: false,
+      storageUser: userFullInfo.user,
+      idOfChosenShaurma: undefined,
+      shaurmaOrdered: addShaurmanThatInCart(),
+      shaurmaList: getShaurma(),
+      additiveList: getAdditive(),
+    }
     this.observers = {}
   }
 
   subscribe(key, fn) {
     if (this.observers[key] === undefined) {
       this.observers[key] = [fn]
-      getContextValue(key)
+      console.log(this.observers)
     } else {
       this.observers[key].push(fn)
       console.log(this.observers)
-      getContextValue(key)
     }
   }
 
@@ -27,7 +59,7 @@ export class Storage {
   }
 
   setValue(key, val) {
-    context[key] = val
+    this.data[key] = val
     const data = { key: key, val: val }
     this.notification(data)
   }
@@ -44,9 +76,3 @@ export class Storage {
 }
 
 export const storage = new Storage()
-
-function getContextValue(key) {
-  const data = context[key]
-  debugger
-  return data
-}

@@ -1,12 +1,12 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { deleteShaurmaInUserCart } from '../../action/fetch-cart'
 import { fetchShaurma } from '../../action/fetch-array'
 import { ModalAdditive } from './modal/modal-additive'
-import { ContextShaurmaId, ContextShaurmaList } from '../../contex'
+import { ContextShaurmaList } from '../../contex'
+import { storage } from '../../contex/storage'
 
-export function ListOfShaurmaCards() {
+export function ListOfShaurmaCards(props) {
   const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
-  const [idOfChosenShauma, setIdOfChosenShauma] = useState()
 
   const listOfCards = []
   for (let i = 0; i < shaurmaList.length; i++) {
@@ -18,20 +18,17 @@ export function ListOfShaurmaCards() {
       const idOfModalButton = `modal_${shaurmaList[i]._id}`
       const shaurmaId = shaurmaList[i]._id
 
-      async function changeId() {
-        setIdOfChosenShauma(shaurmaId)
+      async function openModal() {
+        debugger
+        storage.setValue('idOfChosenShaurma', shaurmaId)
       }
 
       async function deleteFromCart() {
+        const shaurmaListFromServer = await fetchShaurma()
         await deleteShaurmaInUserCart({ shaurmaId })
-        const shaurmaFromServer = await fetchShaurma()
-        setShaurmaList(shaurmaFromServer)
-        setIdOfChosenShauma(undefined)
-      }
-
-      const contextValueOfChosenIdOfShauma = {
-        idOfChosenShauma,
-        setIdOfChosenShauma,
+        setShaurmaList(shaurmaListFromServer)
+        storage.setValue('idOfChosenShaurma', undefined)
+        storage.setValue('shaurmaList', shaurmaListFromServer)
       }
 
       const cardsOfShaurma = (
@@ -56,16 +53,12 @@ export function ListOfShaurmaCards() {
                   data-bs-toggle="modal"
                   data-bs-target="#additiveModal"
                   id={idOfModalButton}
-                  onClick={changeId}
+                  onClick={openModal}
                 >
                   Добавить добавки
                 </button>
                 <div id="additive-modal">
-                  <ContextShaurmaId.Provider
-                    value={contextValueOfChosenIdOfShauma}
-                  >
-                    <ModalAdditive />
-                  </ContextShaurmaId.Provider>
+                  <ModalAdditive shaurmaOrdered={props.shaurmaOrdered} />
                 </div>
                 <h5 id="name-of-shaurma" className="card-title">
                   {nameOfShaurma}

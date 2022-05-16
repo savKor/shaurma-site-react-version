@@ -1,9 +1,10 @@
-import { useContext } from 'react'
-import { ContextAdditiveList } from '../../../../contex'
+import { useAdditive } from '../../../../hook'
 import { Button } from './button'
 
-export function ListOfAdditiveCards() {
-  const { additiveList } = useContext(ContextAdditiveList)
+export function ListOfAdditiveCards(props) {
+  debugger
+  const additiveList = useAdditive()
+
   const listOfCards = []
 
   for (let i = 0; i < additiveList.length; i++) {
@@ -26,7 +27,10 @@ export function ListOfAdditiveCards() {
             <div className="card-body">
               <h5 className="card-title">{nameOfAdditive}</h5>
               <p className="card-text">Цена: {costOfAdditive}</p>
-              <Button idOfAdditive={additiveList[i]._id} />
+              <Button
+                idOfAdditive={additiveList[i]._id}
+                shaurmaOrdered={props.shaurmaOrdered}
+              />
             </div>
           </div>
         </div>

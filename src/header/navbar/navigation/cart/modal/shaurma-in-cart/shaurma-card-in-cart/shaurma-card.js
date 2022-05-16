@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { deleteShaurmaInUserCart } from '../../../../../../../action/fetch-cart'
 import { fetchShaurma } from '../../../../../../../action/fetch-array'
 import { ContextShaurmaList } from '../../../../../../../contex'
+import { storage } from '../../../../../../../contex/storage'
 
 export function ShaurmaCardInCart({
   idOfCard,
@@ -16,8 +17,9 @@ export function ShaurmaCardInCart({
 
   async function deleteFromCart() {
     await deleteShaurmaInUserCart({ shaurmaId })
-    const shaurmaFromServer = await fetchShaurma()
-    setShaurmaList(shaurmaFromServer)
+    const shaurmaListFromServer = await fetchShaurma()
+    storage.setValue('shaurmaList', shaurmaListFromServer)
+    setShaurmaList(shaurmaListFromServer)
   }
 
   return (

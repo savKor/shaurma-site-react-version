@@ -2,13 +2,11 @@ import { Cart } from './cart/cart'
 import { Nick } from './nickname/nickname'
 import { SignUpButton } from './sing-up/sign-up'
 import { ExitButton } from './exit/exit'
-import { useContext } from 'react'
 import { BackButton } from './back/back-button'
-import { ContextUser } from '../../../contex'
+import { useUser } from '../../../hook'
 
 export function Navigation(props) {
-  // const [storageUser, setStorage] = useState(storage.user)
-  const { storageUser } = useContext(ContextUser)
+  const storageUser = useUser()
 
   if (props.pageOrder === false) {
     if (storageUser.loggedIn === true) {

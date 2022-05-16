@@ -1,11 +1,12 @@
 import { useContext } from 'react'
-import { ContextShaurmaList, ContextUser } from '../../../../contex'
+import { ContextShaurmaList } from '../../../../contex'
 import { storage } from '../../../../contex/storage'
+import { useUser } from '../../../../hook'
 import { ModalCard } from './modal/modal'
 
 export function Cart(props) {
   const { shaurmaList } = useContext(ContextShaurmaList)
-  const { storageUser } = useContext(ContextUser)
+  const storageUser = useUser()
 
   function getInfoAboutCart(shaurmaList) {
     let numberOfShaurmaInCart = countShaurmaInCart(shaurmaList)

@@ -1,11 +1,10 @@
 import { parseJwt, userToken, checkUserLoggedIn } from '../action/token'
 
-export const storageUserFullInfo = {
+export const userFullInfo = {
   user: createUserData(userToken),
 }
 
 export function createUserData(userToken) {
-  debugger
   const loggedIn = checkUserLoggedIn(userToken)
   const userData = {
     token: userToken,

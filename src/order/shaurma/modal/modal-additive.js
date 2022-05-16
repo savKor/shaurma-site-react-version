@@ -1,29 +1,9 @@
-import { useState, useEffect, useContext } from 'react'
-
-import { fetchAdditive } from '../../../action/fetch-additive-array'
 import { ListOfAdditiveCards } from './additive-for-shaurma/additive'
-import { ContextAdditiveList, ContextShaurmaId } from '../../../contex'
+import { useAdditive } from '../../../hook'
 
 export function ModalAdditive(props) {
-  const { setIdOfChosenShauma } = useContext(ContextShaurmaId)
-  const [additiveList, setAdditiveList] = useState()
-
-  const contextValueOfAdditive = { additiveList, setAdditiveList }
-
-  async function closeModal() {
-    setIdOfChosenShauma(undefined)
-  }
-
-  useEffect(() => {
-    async function getAdditive() {
-      const additiveFromServer = await fetchAdditive()
-      setAdditiveList(additiveFromServer)
-      debugger
-    }
-
-    getAdditive()
-  }, [])
-
+  const additiveList = useAdditive()
+  debugger
   if (additiveList !== undefined) {
     return (
       <div
@@ -43,13 +23,12 @@ export function ModalAdditive(props) {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={closeModal}
               ></button>
             </div>
             <div id="additives-to-choose-from" className="modal-body">
-              <ContextAdditiveList.Provider value={contextValueOfAdditive}>
-                <ListOfAdditiveCards></ListOfAdditiveCards>
-              </ContextAdditiveList.Provider>
+              <ListOfAdditiveCards
+                shaurmaOrdered={props.shaurmaOrdered}
+              ></ListOfAdditiveCards>
             </div>
             <div className="modal-footer"></div>
           </div>

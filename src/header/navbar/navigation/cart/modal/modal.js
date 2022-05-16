@@ -3,16 +3,17 @@ import { Link } from 'react-router-dom'
 import Modal from 'react-modal'
 import { ListOfCards } from './shaurma-in-cart/shaurma-list-in-cart'
 import { fetchShaurma } from '../../../../../action/fetch-array'
-import { ContextShaurmaList, ContextUser } from '../../../../../contex'
+import { ContextShaurmaList } from '../../../../../contex'
 import { storage } from '../../../../../contex/storage'
+import { useUser } from '../../../../../hook'
 
 export function ModalCard() {
   const { shaurmaList, setShaurmaList } = useContext(ContextShaurmaList)
-  const { storageUser } = useContext(ContextUser)
   const [modalIsOpen, setModalIsOpen] = useState()
 
+  const storageUser = useUser()
+
   async function handleChangeContext(data) {
-    console.log('Это новые данные - ' + data)
     setModalIsOpen(data)
   }
 
@@ -51,9 +52,9 @@ export function ModalCard() {
 
   async function openNewPage() {
     storage.setValue('modalStatus', false)
-    const shaurmaFromServer = await fetchShaurma()
-    setShaurmaList(shaurmaFromServer)
-    storage.unsubscribe('modalStatus')
+    const shaurmaListFromServer = await fetchShaurma()
+    setShaurmaList(shaurmaListFromServer)
+    storage.setValue('shaurmaList', shaurmaListFromServer)
     storage.unsubscribe('modalStatus')
   }
 

@@ -1,15 +1,15 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import { ListOfShaurmaCards } from './shaurma/user-shaurma-list'
 import { addOrderToDatabase } from '../action/fetch-order'
-import { ContextShaurmaOrder } from '../contex'
+import { useOrder } from '../hook'
 
 export function OrderForm() {
   const [coordinates, setCoonrdinates] = useState()
-  const { shaurmaOrdered } = useContext(ContextShaurmaOrder)
+  const shaurmaOrdered = useOrder()
 
   const mapContainer = useRef(null)
   mapboxgl.accessToken =
@@ -60,9 +60,9 @@ export function OrderForm() {
 
   useEffect(() => console.log(coordinates))
 
+  // добавить заказ
   async function handleOrderButton() {
     if (coordinates !== undefined && shaurmaOrdered.length !== 0) {
-      debugger
       addOrderToDatabase({ shaurmaOrdered, coordinates })
     } else {
       alert('Укажите полностью данные')
@@ -73,7 +73,7 @@ export function OrderForm() {
     <main id="main-form">
       <div className="container">
         <ul id="card-list-of-order" className="g-3">
-          <ListOfShaurmaCards />
+          <ListOfShaurmaCards shaurmaOrdered={shaurmaOrdered} />
         </ul>
       </div>
       <div id="map-content">
