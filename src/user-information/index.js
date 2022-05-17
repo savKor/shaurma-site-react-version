@@ -1,4 +1,4 @@
-import { parseJwt, userToken, checkUserLoggedIn } from '../action/token'
+import { parseJwt, userToken, checkUserLoggedIn } from '../api/token'
 
 export const userFullInfo = {
   user: createUserData(userToken),

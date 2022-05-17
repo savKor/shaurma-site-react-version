@@ -1,59 +1,39 @@
 import { useEffect, useState } from 'react'
-import { storage } from '../contex/storage'
+import { storage } from '../storage'
 
-export function useUser() {
-  const [storageUser, setStorageUser] = useState(storage.data.storageUser)
-
-  async function handleChangeUser(data) {
-    setStorageUser(data)
-  }
-
-  useEffect(() => {
-    storage.subscribe('storageUser', handleChangeUser)
-  }, [])
-
-  return storageUser
-}
-
-export function useAdditive() {
-  const [additiveList, setAdditiveList] = useState(storage.data.additiveList)
-
-  async function handleChangeInAdditive(data) {
-    setAdditiveList(data)
-  }
-
-  useEffect(() => {
-    storage.subscribe('additiveList', handleChangeInAdditive)
-  })
-
-  return additiveList
-}
-
-export function useOrder() {
-  const [shaurmaOrdered, setShaurmaOrdered] = useState(
-    storage.data.shaurmaOrdered,
-  )
-
+export function useStorageAndSetData(key, fn) {
+  const [additiveData, setAdditiveData] = useState()
   async function handleChangeChoosenShaurmaId(data) {
-    setShaurmaOrdered(data)
+    setAdditiveData(data)
+  }
+
+  async function setAdditive() {
+    const additiveFromServer = await fn
+    setAdditiveData(additiveFromServer)
   }
 
   useEffect(() => {
-    storage.subscribe('shaurmaOrdered', handleChangeChoosenShaurmaId)
+    setAdditive()
+    storage.subscribe(key, handleChangeChoosenShaurmaId)
+    return () => {
+      storage.unsubscribe(key)
+    }
   }, [])
 
-  return shaurmaOrdered
+  return additiveData
 }
 
-export function useContextData(chosenContext, string) {
-  const [contextData, setContextData] = useState()
-  setContextData(chosenContext)
+export function useStorageData(stateData, key) {
+  const [contextData, setContextData] = useState(stateData)
   async function handleChangeChoosenShaurmaId(data) {
     setContextData(data)
   }
 
   useEffect(() => {
-    storage.subscribe(string, handleChangeChoosenShaurmaId)
+    storage.subscribe(key, handleChangeChoosenShaurmaId)
+    return () => {
+      storage.unsubscribe(key)
+    }
   }, [])
 
   return contextData

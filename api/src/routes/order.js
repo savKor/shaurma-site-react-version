@@ -16,13 +16,11 @@ orderRoutes.post('/order', async (request, response) => {
     data: {},
     errors: [],
   }
+
   const userToken = request.get('x-access-token')
   const decoded = jwtDecode(userToken)
-
   const orderedShaurma = request.body.shaurmaOrdered
-
   const orderCoordinates = request.body.coordinates
-
   const fullShaurmaOrderList = getArrayOfShaurmaOrder()
 
   function getArrayOfShaurmaOrder() {
