@@ -4,9 +4,12 @@ import { ModalAdditive } from './modal/modal-additive'
 import { storage } from '../../../storage'
 import { useStorageAndSetData } from '../../../hook'
 import { getShaurma } from '../../../action'
+import { useDispatch } from 'react-redux'
+import { updateIdOfChosenShaurma } from '../../../features/counter/counterSlice'
 
 export function ListOfShaurmaCards(props) {
   const shaurmaList = useStorageAndSetData('shaurmaList', getShaurma())
+  const dispatch = useDispatch()
 
   if (shaurmaList !== undefined) {
     const listOfCards = []
@@ -20,13 +23,13 @@ export function ListOfShaurmaCards(props) {
         const shaurmaId = shaurmaList[i]._id
 
         async function openModal() {
-          storage.setValue('idOfChosenShaurma', shaurmaId)
+          dispatch(updateIdOfChosenShaurma(shaurmaId))
         }
 
         async function deleteFromCart() {
           await deleteShaurmaInUserCart({ shaurmaId })
           const shaurmaListFromServer = await fetchShaurma()
-          storage.setValue('idOfChosenShaurma', undefined)
+          dispatch(updateIdOfChosenShaurma(undefined))
           storage.setValue('shaurmaList', shaurmaListFromServer)
         }
 

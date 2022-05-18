@@ -1,10 +1,11 @@
 import { AddButton } from './add-button/index.js'
 import { DeleteButton } from './delete-button/index.js'
-import { useStorageData } from '../../../../hook'
-import { storage } from '../../../../storage/index.js'
+import { useSelector } from 'react-redux'
+import { selectState } from '../../../../features/counter/counterSlice.js'
 
 export function ButtonAddOrDelete(props) {
-  const storageUser = useStorageData(storage.data.storageUser, 'storageUser')
+  const store = useSelector(selectState)
+  const storageUser = store.storageUser
   const splitId = props.idOfShaurma.split('_')
   const shaurmaId = splitId[1]
 

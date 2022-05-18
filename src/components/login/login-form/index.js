@@ -1,12 +1,16 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { fetchShaurma } from '../../../api/fetch-array'
 import { loginUser } from '../../../api/fetch-login'
 import { setToken } from '../../../api/token'
+import { updateStorageUser } from '../../../features/counter/counterSlice'
 import { storage } from '../../../storage'
 import { createUserData } from '../../../user-information'
 
 export function LoginForm() {
+  const dispatch = useDispatch()
+
   const [loginFormInfo, setLoginFormInfo] = useState({
     username: '',
     password: '',
@@ -35,10 +39,7 @@ export function LoginForm() {
       const dataKey = result.data
       setToken(dataKey.token)
       const shaurmaListFromServer = await fetchShaurma()
-      storage.setValue(
-        'storageUser',
-        createUserData(localStorage.getItem('token')),
-      )
+      dispatch(updateStorageUser(createUserData(localStorage.getItem('token'))))
       storage.setValue('shaurmaList', shaurmaListFromServer)
       navigate('/')
     }

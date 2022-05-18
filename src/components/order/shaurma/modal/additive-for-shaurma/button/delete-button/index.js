@@ -1,17 +1,26 @@
-import { storage } from '../../../../../../../storage'
 import { fetchAdditive } from '../../../../../../../api/fetch-additive-array'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  updateAdditiveList,
+  updateShaurmaOrdered,
+  selectState,
+} from '../../../../../../../features/counter/counterSlice'
 
-export function DeleteButton({ additiveId, newShaurmaOrdered, shaurmaId }) {
+export function DeleteButton({ additiveId, shaurmaId }) {
+  const store = useSelector(selectState)
+  const shaurmaOrdered = store.shaurmaOrdered
+  const dispatch = useDispatch()
+
   async function deleteAdditive() {
-    const chosenShaurma = newShaurmaOrdered.find(
+    const chosenShaurma = shaurmaOrdered.find(
       (shaurma) => shaurmaId === shaurma.shaurmaId,
     )
     chosenShaurma.additiveIdList = chosenShaurma.additiveIdList.filter(
       (oneOfAdditiveId) => oneOfAdditiveId !== additiveId,
     )
-    storage.setValue('shaurmaOrdered', newShaurmaOrdered)
+    dispatch(updateShaurmaOrdered(shaurmaOrdered))
     const additiveFromServer = await fetchAdditive()
-    storage.setValue('additiveList', additiveFromServer)
+    dispatch(updateAdditiveList(additiveFromServer))
   }
 
   return (

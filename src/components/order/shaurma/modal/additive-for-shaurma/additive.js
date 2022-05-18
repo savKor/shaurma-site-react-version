@@ -1,9 +1,24 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAdditive } from '../../../../../action'
-import { useStorageAndSetData } from '../../../../../hook'
+import {
+  selectState,
+  updateAdditiveList,
+} from '../../../../../features/counter/counterSlice'
 import { Button } from './button'
 
 export function ListOfAdditiveCards(props) {
-  const additiveList = useStorageAndSetData('additiveList', getAdditive())
+  const store = useSelector(selectState)
+  const dispatch = useDispatch()
+  const additiveList = store.additiveList
+  async function setData() {
+    const dataFromServer = await getAdditive()
+    dispatch(updateAdditiveList(dataFromServer))
+  }
+
+  useEffect(() => {
+    setData()
+  }, [])
 
   if (additiveList !== undefined) {
     const listOfCards = []

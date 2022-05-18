@@ -7,7 +7,7 @@ export function ListOfCards() {
 
   if (shaurmaList !== undefined) {
     const listOfCards = []
-
+    debugger
     for (let i = 0; i < shaurmaList.length; i++) {
       const nameOfShaurma = shaurmaList[i].name
       const costOfShaurma = shaurmaList[i].cost

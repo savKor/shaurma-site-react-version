@@ -1,9 +1,24 @@
 import { ListOfAdditiveCards } from './additive-for-shaurma/additive'
-import { useStorageAndSetData } from '../../../../hook'
 import { getAdditive } from '../../../../action'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  selectState,
+  updateAdditiveList,
+} from '../../../../features/counter/counterSlice'
+import { useEffect } from 'react'
 
 export function ModalAdditive(props) {
-  const additiveList = useStorageAndSetData('additiveList', getAdditive())
+  const store = useSelector(selectState)
+  const dispatch = useDispatch()
+  const additiveList = store.additiveList
+  async function setData() {
+    const dataFromServer = await getAdditive()
+    dispatch(updateAdditiveList(dataFromServer))
+  }
+
+  useEffect(() => {
+    setData()
+  }, [])
 
   if (additiveList !== undefined) {
     return (

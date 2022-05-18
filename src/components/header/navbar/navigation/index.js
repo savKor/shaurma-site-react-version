@@ -3,11 +3,12 @@ import { Nick } from './nickname/nickname'
 import { SignUpButton } from './sing-up/sign-up'
 import { ExitButton } from './exit/exit'
 import { BackButton } from './back/back-button'
-import { useStorageData } from '../../../../hook'
-import { storage } from '../../../../storage'
+import { useSelector } from 'react-redux'
+import { selectState } from '../../../../features/counter/counterSlice'
 
 export function Navigation(props) {
-  const storageUser = useStorageData(storage.data.storageUser, 'storageUser')
+  const store = useSelector(selectState)
+  const storageUser = store.storageUser
 
   if (props.pageOrder === false) {
     if (storageUser.loggedIn === true) {

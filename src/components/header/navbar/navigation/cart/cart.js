@@ -1,11 +1,17 @@
-import { storage } from '../../../../../storage'
-import { useStorageData, useStorageAndSetData } from '../../../../../hook'
+import { useStorageAndSetData } from '../../../../../hook'
 import { ModalCard } from './modal'
 import { getShaurma } from '../../../../../action'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  selectState,
+  updateModalStatus,
+} from '../../../../../features/counter/counterSlice'
 
 export function Cart() {
-  const storageUser = useStorageData(storage.data.storageUser, 'storageUser')
+  const store = useSelector(selectState)
+  const storageUser = store.storageUser
   const shaurmaList = useStorageAndSetData('shaurmaList', getShaurma())
+  const dispatch = useDispatch()
 
   function getInfoAboutCart(shaurmaList) {
     let numberOfShaurmaInCart = countShaurmaInCart(shaurmaList)
@@ -33,7 +39,7 @@ export function Cart() {
   }
 
   function openModal() {
-    storage.setValue('modalStatus', true)
+    dispatch(updateModalStatus(true))
   }
 
   if (shaurmaList !== undefined) {
@@ -45,6 +51,8 @@ export function Cart() {
         <button
           id="shop-cart"
           className=" btn btn-sm btn-outline-secondary"
+          data-bs-toggle="modal"
+          data-bs-target="#cartModal"
           onClick={openModal}
         >
           <svg id="cart-element" xmlns="http://www.w3.org/2000/svg" role="img">
@@ -55,7 +63,7 @@ export function Cart() {
             {cartInfo}
           </strong>
         </button>
-        <ModalCard></ModalCard>
+        <ModalCard shaurmaList={shaurmaList}></ModalCard>
       </div>
     )
   }

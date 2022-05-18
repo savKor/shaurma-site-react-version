@@ -1,15 +1,13 @@
-import { storage } from '../../../../../../storage'
-import { useStorageData } from '../../../../../../hook'
+import { useSelector } from 'react-redux'
 import { AddButton } from './add-button'
 import { DeleteButton } from './delete-button'
+import { selectState } from '../../../../../../features/counter/counterSlice'
 
 export function Button(props) {
-  const idOfChosenShaurma = useStorageData(
-    storage.data.idOfChosenShaurma,
-    'idOfChosenShaurma',
-  )
+  const store = useSelector(selectState)
+  const shaurmaOrdered = store.shaurmaOrdered
+  const idOfChosenShaurma = store.idOfChosenShaurma
 
-  const shaurmaOrdered = props.shaurmaOrdered
   let buttonAdditive
 
   function getButton() {
@@ -26,21 +24,9 @@ export function Button(props) {
     )
 
     if (additiveOfShaurma) {
-      button = (
-        <DeleteButton
-          additiveId={additiveId}
-          newShaurmaOrdered={shaurmaOrdered}
-          shaurmaId={shaurmaId}
-        />
-      )
+      button = <DeleteButton additiveId={additiveId} shaurmaId={shaurmaId} />
     } else {
-      button = (
-        <AddButton
-          additiveId={additiveId}
-          newShaurmaOrdered={shaurmaOrdered}
-          shaurmaId={shaurmaId}
-        />
-      )
+      button = <AddButton additiveId={additiveId} shaurmaId={shaurmaId} />
     }
     return button
   }

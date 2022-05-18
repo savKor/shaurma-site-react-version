@@ -1,9 +1,7 @@
-import { getShaurma } from '../../../../../../../action'
-import { useStorageAndSetData } from '../../../../../../../hook'
 import { ShaurmaCardInCart } from './shaurma-card-in-cart/shaurma-card'
 
-export function ListOfCards() {
-  const shaurmaList = useStorageAndSetData('shaurmaList', getShaurma())
+export function ListOfCards(props) {
+  const shaurmaList = props.shaurmaList
 
   if (shaurmaList !== undefined) {
     const listOfCards = []

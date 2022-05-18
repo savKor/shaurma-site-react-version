@@ -1,23 +1,4 @@
-import { fetchShaurma } from '../api/fetch-array'
 import { userFullInfo } from '../user-information'
-
-async function addShaurmanThatInCart() {
-  const shaurmaListFromServer = await fetchShaurma()
-  let orderInfo = []
-  let shaurmaObject
-  for (let i = 0; i < shaurmaListFromServer.length; i++) {
-    if (shaurmaListFromServer[i].inCart === true) {
-      shaurmaObject = {
-        // объект
-        shaurmaId: shaurmaListFromServer[i]._id,
-        additiveIdList: [],
-      }
-      orderInfo.push(shaurmaObject)
-    }
-  }
-  console.log(orderInfo)
-  storage.setValue('shaurmaOrdered', orderInfo)
-}
 
 export class Storage {
   constructor() {
@@ -25,7 +6,7 @@ export class Storage {
       modalStatus: false,
       storageUser: userFullInfo.user,
       idOfChosenShaurma: undefined,
-      shaurmaOrdered: addShaurmanThatInCart(),
+      shaurmaOrdered: undefined,
       shaurmaList: undefined,
       additiveList: undefined,
     }

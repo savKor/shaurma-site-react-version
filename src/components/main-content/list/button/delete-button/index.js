@@ -4,7 +4,7 @@ import { storage } from '../../../../../storage'
 
 export function DeleteButton(props) {
   const shaurmaId = props.shaurmaId
-
+  debugger
   async function deleteFromCart() {
     if (props.loggedIn === true) {
       await deleteShaurmaInUserCart({ shaurmaId })

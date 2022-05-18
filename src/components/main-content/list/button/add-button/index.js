@@ -7,8 +7,10 @@ export function AddButton(props) {
 
   async function addInCart() {
     if (props.loggedIn === true) {
+      debugger
       await putShaurmaInUserCart({ shaurmaId })
       const shaurmaListFromServer = await fetchShaurma()
+      debugger
       storage.setValue('shaurmaList', shaurmaListFromServer)
     }
   }

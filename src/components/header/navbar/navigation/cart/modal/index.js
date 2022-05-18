@@ -1,15 +1,19 @@
 import { Link } from 'react-router-dom'
 import Modal from 'react-modal'
 import { ListOfCards } from './shaurma-in-cart/shaurma-cards-in-cart.js'
-import { fetchShaurma } from '../../../../../../api/fetch-array'
-import { storage } from '../../../../../../storage'
-import { useStorageData, useStorageAndSetData } from '../../../../../../hook'
-import { getShaurma } from '../../../../../../action/index.js'
+import {
+  selectState,
+  updateModalStatus,
+} from '../../../../../../features/counter/counterSlice.js'
+import { useDispatch, useSelector } from 'react-redux'
 
-export function ModalCard() {
-  const shaurmaList = useStorageAndSetData('shaurmaList', getShaurma())
-  const storageUser = useStorageData(storage.data.storageUser, 'storageUser')
-  const modalStatus = useStorageData(storage.data.modalStatus, 'modalStatus')
+export function ModalCard(props) {
+  const shaurmaList = props.shaurmaList
+  const dispatch = useDispatch()
+  const store = useSelector(selectState)
+  console.log(store)
+  const storageUser = store.storageUser
+  const modalStatus = store.modalStatus
 
   function getListOfShaurmaInCart(shaurmaList) {
     const costOfEveryShaurma = []
@@ -36,13 +40,11 @@ export function ModalCard() {
   }
 
   async function closeModal() {
-    storage.setValue('modalStatus', false)
+    dispatch(updateModalStatus(false))
   }
 
   async function openNewPage() {
-    storage.setValue('modalStatus', false)
-    const shaurmaListFromServer = await fetchShaurma()
-    storage.setValue('shaurmaList', shaurmaListFromServer)
+    dispatch(updateModalStatus(false))
   }
 
   function alertMessage() {
@@ -93,7 +95,7 @@ export function ModalCard() {
             ></button>
           </div>
           <div id="cart-with-shaurma" className="modal-body">
-            <ListOfCards></ListOfCards>
+            <ListOfCards shaurmaList={props.shaurmaList}></ListOfCards>
           </div>
           <div className="modal-footer">
             <strong id="fullCostOfShaurma">Вся стоимость: {cost} rub</strong>

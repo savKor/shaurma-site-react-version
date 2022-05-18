@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react'
 import { storage } from '../storage'
 
 export function useStorageAndSetData(key, fn) {
-  const [additiveData, setAdditiveData] = useState()
+  const [storageData, setStorageData] = useState()
+  debugger
   async function handleChangeChoosenShaurmaId(data) {
-    setAdditiveData(data)
+    setStorageData(data)
   }
 
   async function setAdditive() {
-    const additiveFromServer = await fn
-    setAdditiveData(additiveFromServer)
+    const dataFromServer = await fn
+    setStorageData(dataFromServer)
   }
 
   useEffect(() => {
@@ -20,13 +21,13 @@ export function useStorageAndSetData(key, fn) {
     }
   }, [])
 
-  return additiveData
+  return storageData
 }
 
 export function useStorageData(stateData, key) {
-  const [contextData, setContextData] = useState(stateData)
+  const [storageData, setStorageData] = useState(stateData)
   async function handleChangeChoosenShaurmaId(data) {
-    setContextData(data)
+    setStorageData(data)
   }
 
   useEffect(() => {
@@ -36,5 +37,5 @@ export function useStorageData(stateData, key) {
     }
   }, [])
 
-  return contextData
+  return storageData
 }

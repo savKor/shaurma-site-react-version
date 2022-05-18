@@ -5,15 +5,27 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import { ListOfShaurmaCards } from './shaurma'
 import { addOrderToDatabase } from '../../api/fetch-order'
-import { useStorageAndSetData } from '../../hook'
 import { addShaurmanThatInCart } from '../../action'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  selectState,
+  updateShaurmaOrdered,
+} from '../../features/counter/counterSlice'
 
 export function OrderForm() {
   const [coordinates, setCoonrdinates] = useState()
-  const shaurmaOrdered = useStorageAndSetData(
-    'shaurmaOrdered',
-    addShaurmanThatInCart(),
-  )
+
+  const store = useSelector(selectState)
+  const dispatch = useDispatch()
+  const shaurmaOrdered = store.shaurmaOrdered
+  async function setData() {
+    const dataFromServer = await addShaurmanThatInCart()
+    dispatch(updateShaurmaOrdered(dataFromServer))
+  }
+
+  useEffect(() => {
+    setData()
+  }, [])
 
   const mapContainer = useRef(null)
   mapboxgl.accessToken =
@@ -67,6 +79,7 @@ export function OrderForm() {
   // добавить заказ
   async function handleOrderButton() {
     if (coordinates !== undefined && shaurmaOrdered.length !== 0) {
+      console.log({ shaurmaOrdered, coordinates })
       addOrderToDatabase({ shaurmaOrdered, coordinates })
     } else {
       alert('Укажите полностью данные')
