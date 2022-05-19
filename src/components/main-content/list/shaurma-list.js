@@ -1,13 +1,28 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { getShaurma } from '../../../action'
-import { useStorageAndSetData } from '../../../hook'
+import {
+  selectState,
+  updateShaurmaList,
+} from '../../../features/counter/storageSlice'
 import { ButtonAddOrDelete } from './button'
 
 export function ListOfCards() {
-  const shaurmaList = useStorageAndSetData('shaurmaList', getShaurma())
+  const dispatch = useDispatch()
+  const store = useSelector(selectState)
+  const shaurmaList = store.shaurmaList
+
+  async function setData() {
+    const dataFromServer = await getShaurma()
+    dispatch(updateShaurmaList(dataFromServer))
+  }
+
+  useEffect(() => {
+    setData()
+  }, [])
 
   if (shaurmaList !== undefined) {
     const listOfCards = []
-    debugger
     for (let i = 0; i < shaurmaList.length; i++) {
       const nameOfShaurma = shaurmaList[i].name
       const costOfShaurma = shaurmaList[i].cost

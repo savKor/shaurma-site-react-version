@@ -1,15 +1,17 @@
+import { useDispatch } from 'react-redux'
 import { fetchShaurma } from '../../../../../api/fetch-array'
 import { deleteShaurmaInUserCart } from '../../../../../api/fetch-cart'
-import { storage } from '../../../../../storage'
+import { updateShaurmaList } from '../../../../../features/counter/storageSlice'
 
 export function DeleteButton(props) {
   const shaurmaId = props.shaurmaId
-  debugger
+  const dispatch = useDispatch()
+
   async function deleteFromCart() {
     if (props.loggedIn === true) {
       await deleteShaurmaInUserCart({ shaurmaId })
       const shaurmaListFromServer = await fetchShaurma()
-      storage.setValue('shaurmaList', shaurmaListFromServer)
+      dispatch(updateShaurmaList(shaurmaListFromServer))
     }
   }
 

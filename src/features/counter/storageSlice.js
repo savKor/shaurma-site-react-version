@@ -30,6 +30,30 @@ export const counterSlice = createSlice({
       state.shaurmaOrdered = action.payload
     },
 
+    updateAdditiveListInOrder: (state, action) => {
+      const shaurmaOrdered = state.shaurmaOrdered
+      const shaurmaId = action.payload.shaurmaId
+      const additiveId = action.payload.additiveId
+
+      const chosenShaurma = shaurmaOrdered.find(
+        (shaurma) => shaurmaId === shaurma.shaurmaId,
+      )
+
+      const additiveOfShaurma = chosenShaurma.additiveIdList.find(
+        (additive) => additiveId === additive,
+      )
+
+      if (additiveOfShaurma) {
+        chosenShaurma.additiveIdList = chosenShaurma.additiveIdList.filter(
+          (oneOfAdditiveId) => oneOfAdditiveId !== additiveId,
+        )
+        state.shaurmaOrdered = shaurmaOrdered
+      } else {
+        chosenShaurma.additiveIdList.push(additiveId)
+        state.shaurmaOrdered = shaurmaOrdered
+      }
+    },
+
     updateAdditiveList: (state, action) => {
       state.additiveList = action.payload
     },
@@ -47,6 +71,7 @@ export const {
   updateShaurmaOrdered,
   updateAdditiveList,
   updateModalStatus,
+  updateAdditiveListInOrder,
 } = counterSlice.actions
 
 export const incrementAsync = (action, fn) => (dispatch) => {

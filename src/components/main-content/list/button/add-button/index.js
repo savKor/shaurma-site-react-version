@@ -1,17 +1,17 @@
+import { useDispatch } from 'react-redux'
 import { fetchShaurma } from '../../../../../api/fetch-array'
 import { putShaurmaInUserCart } from '../../../../../api/fetch-cart'
-import { storage } from '../../../../../storage'
+import { updateShaurmaList } from '../../../../../features/counter/storageSlice'
 
 export function AddButton(props) {
   const shaurmaId = props.shaurmaId
+  const dispatch = useDispatch()
 
   async function addInCart() {
     if (props.loggedIn === true) {
-      debugger
       await putShaurmaInUserCart({ shaurmaId })
       const shaurmaListFromServer = await fetchShaurma()
-      debugger
-      storage.setValue('shaurmaList', shaurmaListFromServer)
+      dispatch(updateShaurmaList(shaurmaListFromServer))
     }
   }
 

@@ -4,7 +4,7 @@ import { getAdditive } from '../../../../../action'
 import {
   selectState,
   updateAdditiveList,
-} from '../../../../../features/counter/counterSlice'
+} from '../../../../../features/counter/storageSlice'
 import { Button } from './button'
 
 export function ListOfAdditiveCards(props) {

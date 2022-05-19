@@ -4,7 +4,7 @@ import { ListOfCards } from './shaurma-in-cart/shaurma-cards-in-cart.js'
 import {
   selectState,
   updateModalStatus,
-} from '../../../../../../features/counter/counterSlice.js'
+} from '../../../../../../features/counter/storageSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 export function ModalCard(props) {

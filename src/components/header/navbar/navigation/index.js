@@ -4,7 +4,7 @@ import { SignUpButton } from './sing-up/sign-up'
 import { ExitButton } from './exit/exit'
 import { BackButton } from './back/back-button'
 import { useSelector } from 'react-redux'
-import { selectState } from '../../../../features/counter/counterSlice'
+import { selectState } from '../../../../features/counter/storageSlice'
 
 export function Navigation(props) {
   const store = useSelector(selectState)

@@ -1,15 +1,28 @@
 import { deleteShaurmaInUserCart } from '../../../api/fetch-cart'
 import { fetchShaurma } from '../../../api/fetch-array'
 import { ModalAdditive } from './modal/modal-additive'
-import { storage } from '../../../storage'
-import { useStorageAndSetData } from '../../../hook'
 import { getShaurma } from '../../../action'
-import { useDispatch } from 'react-redux'
-import { updateIdOfChosenShaurma } from '../../../features/counter/counterSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  selectState,
+  updateIdOfChosenShaurma,
+  updateShaurmaList,
+} from '../../../features/counter/storageSlice'
+import { useEffect } from 'react'
 
 export function ListOfShaurmaCards(props) {
-  const shaurmaList = useStorageAndSetData('shaurmaList', getShaurma())
   const dispatch = useDispatch()
+  const store = useSelector(selectState)
+  const shaurmaList = store.shaurmaList
+
+  async function setData() {
+    const dataFromServer = await getShaurma()
+    dispatch(updateShaurmaList(dataFromServer))
+  }
+
+  useEffect(() => {
+    setData()
+  }, [])
 
   if (shaurmaList !== undefined) {
     const listOfCards = []
@@ -30,7 +43,7 @@ export function ListOfShaurmaCards(props) {
           await deleteShaurmaInUserCart({ shaurmaId })
           const shaurmaListFromServer = await fetchShaurma()
           dispatch(updateIdOfChosenShaurma(undefined))
-          storage.setValue('shaurmaList', shaurmaListFromServer)
+          dispatch(updateShaurmaList(shaurmaListFromServer))
         }
 
         const cardsOfShaurma = (

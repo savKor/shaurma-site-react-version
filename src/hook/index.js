@@ -3,7 +3,6 @@ import { storage } from '../storage'
 
 export function useStorageAndSetData(key, fn) {
   const [storageData, setStorageData] = useState()
-  debugger
   async function handleChangeChoosenShaurmaId(data) {
     setStorageData(data)
   }

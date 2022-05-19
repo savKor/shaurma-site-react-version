@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import { fetchShaurma } from '../../../api/fetch-array'
 import { loginUser } from '../../../api/fetch-login'
 import { setToken } from '../../../api/token'
-import { updateStorageUser } from '../../../features/counter/counterSlice'
-import { storage } from '../../../storage'
+import {
+  updateShaurmaList,
+  updateStorageUser,
+} from '../../../features/counter/storageSlice'
 import { createUserData } from '../../../user-information'
 
 export function LoginForm() {
@@ -40,7 +42,7 @@ export function LoginForm() {
       setToken(dataKey.token)
       const shaurmaListFromServer = await fetchShaurma()
       dispatch(updateStorageUser(createUserData(localStorage.getItem('token'))))
-      storage.setValue('shaurmaList', shaurmaListFromServer)
+      dispatch(updateShaurmaList(shaurmaListFromServer))
       navigate('/')
     }
   }

@@ -1,17 +1,20 @@
 import { useDispatch } from 'react-redux'
 import { fetchShaurma } from '../../../../../api/fetch-array'
 import { deleteToken } from '../../../../../api/token'
-import { updateStorageUser } from '../../../../../features/counter/counterSlice'
-import { storage } from '../../../../../storage'
+import {
+  updateShaurmaList,
+  updateStorageUser,
+} from '../../../../../features/counter/storageSlice'
 import { createUserData } from '../../../../../user-information'
 
 export function ExitButton() {
   const dispatch = useDispatch()
+
   async function onExitClick() {
     deleteToken()
     dispatch(updateStorageUser(createUserData(localStorage.getItem('token'))))
     const shaurmaListFromServer = await fetchShaurma()
-    storage.setValue('shaurmaList', shaurmaListFromServer)
+    dispatch(updateShaurmaList(shaurmaListFromServer))
   }
 
   return (

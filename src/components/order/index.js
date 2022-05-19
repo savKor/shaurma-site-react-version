@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   selectState,
   updateShaurmaOrdered,
-} from '../../features/counter/counterSlice'
+} from '../../features/counter/storageSlice'
 
 export function OrderForm() {
   const [coordinates, setCoonrdinates] = useState()

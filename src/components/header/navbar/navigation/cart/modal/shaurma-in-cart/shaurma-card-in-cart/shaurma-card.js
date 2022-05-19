@@ -1,6 +1,7 @@
 import { deleteShaurmaInUserCart } from '../../../../../../../../api/fetch-cart'
 import { fetchShaurma } from '../../../../../../../../api/fetch-array'
-import { storage } from '../../../../../../../../storage'
+import { useDispatch } from 'react-redux'
+import { updateShaurmaList } from '../../../../../../../../features/counter/storageSlice'
 
 export function ShaurmaCardInCart({
   idOfCard,
@@ -10,11 +11,12 @@ export function ShaurmaCardInCart({
 }) {
   const splitId = idOfShaurma.split('_')
   const shaurmaId = splitId[1]
+  const dispatch = useDispatch()
 
   async function deleteFromCart() {
     await deleteShaurmaInUserCart({ shaurmaId })
     const shaurmaListFromServer = await fetchShaurma()
-    storage.setValue('shaurmaList', shaurmaListFromServer)
+    dispatch(updateShaurmaList(shaurmaListFromServer))
   }
 
   return (

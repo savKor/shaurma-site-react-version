@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { AddButton } from './add-button'
 import { DeleteButton } from './delete-button'
-import { selectState } from '../../../../../../features/counter/counterSlice'
+import { selectState } from '../../../../../../features/counter/storageSlice'
 
 export function Button(props) {
   const store = useSelector(selectState)

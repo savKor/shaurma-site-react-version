@@ -1,17 +1,27 @@
-import { useStorageAndSetData } from '../../../../../hook'
 import { ModalCard } from './modal'
 import { getShaurma } from '../../../../../action'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   selectState,
   updateModalStatus,
-} from '../../../../../features/counter/counterSlice'
+  updateShaurmaList,
+} from '../../../../../features/counter/storageSlice'
+import { useEffect } from 'react'
 
 export function Cart() {
+  const dispatch = useDispatch()
   const store = useSelector(selectState)
   const storageUser = store.storageUser
-  const shaurmaList = useStorageAndSetData('shaurmaList', getShaurma())
-  const dispatch = useDispatch()
+  const shaurmaList = store.shaurmaList
+
+  async function setData() {
+    const dataFromServer = await getShaurma()
+    dispatch(updateShaurmaList(dataFromServer))
+  }
+
+  useEffect(() => {
+    setData()
+  }, [])
 
   function getInfoAboutCart(shaurmaList) {
     let numberOfShaurmaInCart = countShaurmaInCart(shaurmaList)
@@ -43,7 +53,6 @@ export function Cart() {
   }
 
   if (shaurmaList !== undefined) {
-    debugger
     let cartInfo = getInfoAboutCart(shaurmaList)
 
     return (

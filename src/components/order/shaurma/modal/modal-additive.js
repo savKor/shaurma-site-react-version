@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   selectState,
   updateAdditiveList,
-} from '../../../../features/counter/counterSlice'
+} from '../../../../features/counter/storageSlice'
 import { useEffect } from 'react'
 
 export function ModalAdditive(props) {
